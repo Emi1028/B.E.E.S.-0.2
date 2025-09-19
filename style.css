@@ -35,11 +35,16 @@ body {
     flex-direction: column;
     justify-content: center;     
     align-items: center;         
-    height: 50vh;               
+    height: 50vh;
+    width: 20%;               
     margin: 0;
-    background-color: #3fc0c5;
     color:#ffffff;
     font-family: 'Segoe UI', sans-serif; 
+    background-image: url("img/fondo.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 200px;
 }
 h1 {
     font-size: 4rem;
