@@ -1,0 +1,97 @@
+button {
+    background: #d61515;
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    padding: 2px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+}
+button:hover, .btn-green:hover {
+    background: #f32525;
+}
+main {
+    padding: 0;
+    margin: 1rem;
+    background-color: #ffffff;
+    margin: 0;
+}
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    padding: 0;
+    margin: 0;
+}
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;     
+    align-items: center;         
+    height: 50vh;               
+    margin: 0;
+    background-color: #3fc0c5;
+    color:#ffffff;
+    font-family: 'Segoe UI', sans-serif; 
+}
+h1 {
+    font-size: 4rem;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-family: 'Anton', sans-serif;
+}
+header {
+    color: #EDD944;
+    background-color: black;
+    padding: 20px;
+    font-size: 30px;
+    font-family: 'Anton', sans-serif;
+}
+
+footer {
+    background-color: black;
+    padding: 20px;
+    color: #fff;
+}
+p {
+    font-size: 1.2rem;  
+    text-align: justify;
+    color: #000000;
+}
+.logo{
+    width: 48.6px;
+    height: 40px;
+}
+.lista {
+    display: flex;
+    font-size: 1.2rem;
+    justify-content: center;
+    margin: 0;
+    padding: 0
+}
+div {
+    margin: 20px;
+    padding: 20px;
+}
+img {
+    width: 400px;
+    height: 400px;
+}
+.juegos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    height: 400px;
+}
+.espacio{
+    padding-left: 90px;
+}
