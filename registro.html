@@ -1,0 +1,45 @@
+<html>  
+    <head>
+        <link rel="stylesheet" href="style2.css">
+        <link rel="icon" href="" type="image/">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="app.js"></script>
+        <title>Registro B.E.E.S</title>
+    </head>
+    <body> 
+        <main>
+            <div class="container">
+                <h1>Registro</h1>
+                <form action="exitoso.html">
+                    <label>Nombre</label>
+                    <input type="text" name="nombre" placeholder="Nombres" required>
+                    <div class="apellidos">
+                        <article class="espacio"><label>Apellido paterno</label><br>
+                        <input type="text" name="apellido_p" placeholder="Apellido paterno" required></article>
+
+                        <article><label>Apellido materno</label><br>
+                        <input type="text" name="apellido_m" placeholder="Apellido Materno" required></article>
+                    </div>
+                    <label>Telefono</label>
+                    <input type="text" name="telefono" placeholder="10 digitos" required>
+                    <hr>
+                    <label for="contraseña"> Contraseña</label>
+                    <input type="password" name="contraseña" placeholder="Al menos 8 caracteres" required>
+                    <label for="confirmar">Confirmar contraseña</label>
+                    <input type="password" name="confirmar" placeholder="Ingrese la contraseña nuevamente" required>
+                    <button type="submit">Registrarse</button>
+                    <p id="mensajeError" class="error"></p>
+                </form>
+            </div>
+        </main>
+    </body>
+    <script>
+    // Mostrar mensaje de error si viene en la URL
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get('error');
+    if (error) {
+        document.getElementById('mensajeError').textContent = decodeURIComponent(error);
+    }
+    </script>
+</html>
