@@ -9,10 +9,9 @@
     <title>B.E.E.S</title>
 </head>
 <body>
-    <header class="bg-black text-white p-3 text-[4vh] flex justify-between">
+    <header class="bg-black text-white text-[4vh] flex justify-between ">
         <!--Esto es para poner logos, pueden ser animados y con hypervinculos-->
-        <!--
-        <img src="img/logo2.png" alt="logo de Swarmp" class="logo" >
+        <!--rounded-bl-xl
         <a class="bg-purple-300 p-2 size-96 rounded-full flex items-center justify-center fixed hover:bg-purple-950" 
                 href="https://www.twitch.tv/elded" target="_blank" 
                 aria-label="Twitch de elded" title="Twitch de elded">
@@ -21,28 +20,34 @@
                     </svg>
                 </a>
         -->
-        <p class="text-yellow-300 ">Swarmp</p>
+        <div class="flex items-center"> 
+            <img src="img/logo2.png" alt="logo de Swarmp">
+            <p class="text-yellow-300 m-3">Swarmp</p>
+        </div>
+       
         <div>
-            <button>Registrarse</button>
-            <button>Registrarse</button>
-            <button>Registrarse</button>
-            <button>iniciar sesion</button>
+            <button class="bg-black hover:bg-teal-300 m-0 py-3 px-2">Registrarse</button>
+            <button class="bg-black hover:bg-teal-300 m-0 py-3 px-2">Registrarse</button>
+            <button class="bg-black hover:bg-teal-300 m-0 py-3 px-2">Registrarse</button>
+            <button class="bg-black hover:bg-red-600 m-0 py-3 px-2">iniciar sesion</button>
         </div> 
     </header>
     <main>
-        <div class="bg-[url('img/fondo.jpg')] bg-no-repeat bg-cover text-white text-[100px] font-bold size-[50vh] flex flex-col justify-center items-center text-left space-y-6">
-            <h1>Bienvenido<br>B.E.E.S</h1>
-            <form action="registro.html">
-                <h2><button class="bg-red-700  hover:bg-red-600 transition delay-150 duration-200 ease-in-out hover:-translate-y-1 
-                    hover:scale-105 text-white font-bold py-1 px-4 rounded-full justify-center items-center font-sans text-4xl pb-3"
-                    type="submit">
-                    Registrarse
-                </button></h2>
-                <!--<button type="submit">Registrarse</button>-->
-            </form>
+        <div class="bg-[url('img/fondo.jpg')] bg-no-repeat bg-cover text-white text-[80px] font-bold h-[70vh] flex flex-col justify-center items-start -space-y-10">
+            <article class="bg-[rgba(49,251,216,0.46)] rounded-tr-full p-10  h-[70vh] w-[100vh]">
+                <h1 class="text-left pt-[60px] pl-0 m-0">Bienvenidos <br>a B.E.E.S</h1>
+                <form action="registro.html">
+                    <h2 ><button class="bg-red-700  hover:bg-red-600 transition delay-150 duration-200 ease-in-out hover:-translate-y-1 
+                        hover:scale-105 text-white font-bold py-1 px-4 mt-0 rounded-full justify-center items-center font-sans text-4xl pb-3"
+                        type="submit">
+                        Registrarse
+                    </button></h2>
+                    <!--<button type="submit">Registrarse</button>-->
+                </form>
+            </article>
         </div>
         <div class="p-7 justify-center text-[3vh]">
-            <br>
+            <br>    
             <h2 class="text-3xl">¿Qué es B.E.E.S?</h2>
             <p>
             En la actualidad el 5% - 10% de niños en México padecen de TDAH; En los niños que padecen esta patología, sufren dificultades al momento de desarrollar habilidades cognitivas según el “Congreso Internacional de Ciencias Naturales y Aplicadas”.
