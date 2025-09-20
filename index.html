@@ -3,35 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <!--<link rel="stylesheet" href="style.css">-->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="icon" href="img/logo2.png" type="imge/png">
     <title>B.E.E.S</title>
 </head>
 <body>
-    <header>
-        <p><img src="img/logo2.png" alt="logo de Swarmp" class="logo" >Swarmp</p> 
-        <button class= "seleccion" type="submit">Registrarse</button>
-        <button class= "seleccion" type="submit">Registrarse</button>
-        <button class= "seleccion" type="submit">Registrarse</button>
-        <button class= "seleccion" id = "si" type="submit">iniciar sesion</button>
+    <header class="bg-black text-white p-3 text-size-4xl flex justify-between">
+        <!--
+        <img src="img/logo2.png" alt="logo de Swarmp" class="logo" >
+        <a class="bg-purple-300 p-2 size-96 rounded-full flex items-center justify-center fixed hover:bg-purple-950" 
+                href="https://www.twitch.tv/elded" target="_blank" 
+                aria-label="Twitch de elded" title="Twitch de elded">
+                    <svg width="400" height ="400" >
+                        <use xlink:href="./assets/sprite.svg#twitch" />
+                    </svg>
+                </a>
+        -->
+        <p class=" text-yellow-300 ">Swarmp</p>
+        <div>
+            <button >Registrarse</button>
+            <button>Registrarse</button>
+            <button>Registrarse</button>
+            <button>iniciar sesion</button>
+        </div> 
     </header>
     <main>
-        <div id="Bienvenido">
-            <div id="caja-trasparente">
-                <br><br><br><br>
-                <h1>Bienvenido<br>B.E.E.S</h1>
-                <form action="registro.html">
-                    <h2><button id= "red"type="submit">Registrarse</button></h2>
-                </form>
-            </div>
+        <div class="bg-[url('img/fondo.jpg')] bg-no-repeat bg-cover text-white text-[100px] font-bold size-[50vh] flex flex-col justify-center items-center text-left space-y-6">
+            <h1>Bienvenido<br>B.E.E.S</h1>
+            <form action="registro.html">
+                <h2><button class="bg-red-700  hover:bg-red-600 transition delay-150 duration-200 ease-in-out hover:-translate-y-1 
+                    hover:scale-105 text-white font-bold py-1 px-4 rounded-full justify-center items-center font-sans text-4xl pb-3"
+                    type="submit">
+                    Registrarse
+                </button></h2>
+                <!--<button type="submit">Registrarse</button>-->
+            </form>
         </div>
-        <div id="que-es">
+        <div>
             <h2>¿Qué es B.E.E.S?</h2>
             <p>
                 En la actualidad el 5% - 10% de niños en México padecen de TDAH; En los niños que padecen esta patología, sufren dificultades al momento de desarrollar habilidades cognitivas según el “Congreso Internacional de Ciencias Naturales y Aplicadas”.
                 Por lo que esta herramienta interactiva (B.E.E.S.) se centra en desarrollar las habilidades cognitivas de niños con TDAH, esto lo lograremos atravez de que los niños realicen una serie de actividades lúdicas podrán mejorar sus capacidades como la memoria, concentración, reconocimiento de patrones y diferencias, lógica, entre otros. A su vez los padres o el tutor podrán ver la mejora continua accediendo a los datos del niño y la comparación de sus resultados a través del tiempo con una interfaz amigable, fácil y rápida., Algunos ejemplos de estos juegos son:
             </p>
-            <div class="lista">
+            <div>
                 <ul>
                     <li>Suma y restas</li>
                     <li>Efecto stroop</li>
@@ -44,8 +59,28 @@
                     <li>Memorama</li>
                     <li>Ruleta de palabras</li>  
                 </ul>
-                <div class ="espacio">         
-                    <img src="img/juegos.png" alt="juegos de B.E.E.S" class="juegos"> 
+                <div class="flex overflow-x-auto scroll-snap-x scroll-snap-mandatory gap-4 py-4">
+                    <div class="scroll-snap-center flex-shrink-0 border-[13px] border-black rounded-xl">
+                        <img class ="w-[700px] h-[500px]" src="img/juegos.png" />
+                    </div>
+                    <div class="scroll-snap-center flex-shrink-0 border-[13px] border-black rounded-xl">
+                        <img class ="w-[700px] h-[500px]" src="img/memorama.png" />
+                    </div>
+                    <div class="scroll-snap-center flex-shrink-0 border-[13px] border-black rounded-xl">
+                        <img class ="w-[700px] h-[500px]" src="img/calendario.png" />
+                    </div>
+                    <div class="scroll-snap-center flex-shrink-0 border-[13px] border-black rounded-xl">
+                        <img class ="w-[700px] h-[500px]" src="img/fondo.jpg" />
+                    </div>
+                    <div class="scroll-snap-center flex-shrink-0 border-[13px] border-black rounded-xl">
+                        <img class ="w-[700px] h-[500px]" src="img/tetris.png" />
+                    </div>
+                    <div class="scroll-snap-center flex-shrink-0 border-[13px] border-black rounded-xl">
+                        <img class ="w-[700px] h-[500px]" src="img/repo.png" />
+                    </div>
+                </div>
+                <div>         
+                    <!--<img src="img/juegos.png" alt="juegos de B.E.E.S" class="juegos">--> 
                     Menu de seleccion de juegos
                 </div>
             </div>
