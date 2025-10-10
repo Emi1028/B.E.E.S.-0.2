@@ -42,7 +42,6 @@ p {
 }
 main {
     padding: 0;
-    margin: 1rem;
     margin: 0;
 }
 body {
@@ -70,31 +69,39 @@ body {
 #caja-trasparente {
     background-color: #3fc1c59b;
     margin:0;
-    padding: auto;
+    padding-left: 15px;
     border-radius: 0% 100% 0% 0% / 100% 100% 0% 0%;
     height: 80vh;
 	width: 70vh;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align:left
-    
-    
+    text-align:left;
 }
-h1 {
+/*h1 {
     font-size: 9vh;
     margin-top: 20px;
     margin-bottom: 15px;
     font-family: 'Anton', sans-serif;
+}*/
+.bar::-webkit-bar {
+  display: none;
+}
+
+.bar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 header {
     display: flex;
     background-color: black;
     padding-left: 20px;
-    font-size: 30px;
+    font-size: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
 
 }
-header>p{
-    color: #EDD944;
-    font-size: 30px;
+header>div>p{
+    color: #ffeb52;
+    font-size: 2rem;
     font-family: 'Anton', sans-serif;
     padding-right: 40%;
 }
@@ -106,6 +113,7 @@ footer {
 .logo{
     width: 48.6px;
     height: 40px;
+    margin-top: 10px;
 }
 .lista {
     display: flex;
@@ -113,14 +121,6 @@ footer {
     justify-content: center;
     margin: 0;
     padding: 0
-}
-div {
-    margin: 20px;
-    padding: 20px;
-}
-img {
-    width: 400px;
-    height: 400px;
 }
 .juegos {
     display: flex;
@@ -132,9 +132,4 @@ img {
 }
 .espacio{
     padding-left: 90px;
-}
-#que-es {
-    padding-left: 15vh;
-    padding-right: 15vh;
-    margin: 20px;
 }
