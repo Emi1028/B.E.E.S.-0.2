@@ -9,31 +9,53 @@
     <title>B.E.E.S</title>
 </head>
 <body class=" bg-white p-0 m-0 ">
-    <dialog id="dialog">
+    <dialog id="inicio-sesion">
         <div class="container">
-            <h1>Inicio de sesión</h1>
-            <form name="registro" action="exitoso.html">
+            <div class="flex justify-between">
+                <h1>Inicio de sesión</h1>
+                <form method="dialog">
+                    <button id="close" type="submit">✖️</button>
+                </form>
+            </div>
+            <form name="inicio-sesion" action="exitoso/">
+                <label>Nombre</label>
+                <input type="text" name="nombre" placeholder="Nombres" required>
+                <label for="contraseña"> Contraseña</label>
+                <input type="password" id="contraseña" placeholder="Al menos 8 caracteres" required>
+                <button class ="load" type="submit">Iniciar sesión</button><br><br>
+                ¿No tienes cuenta?<br>
+                <button id="btn-registro" type="button" class="hover:text-white">Regístrate</button>
+            </form>
+        </div>
+    </dialog>
+    <dialog id="registro">
+        <div class="container">
+            <div class="flex justify-between">
+                <h1>Registro</h1>
+                <form method="dialog">
+                    <button id="close" type="submit">✖️</button>
+                </form>
+            </div>
+            <form name="registro">
                 <label>Nombre</label>
                 <input type="text" name="nombre" placeholder="Nombres" required>
                 <div class="apellidos">
-                <article class="espacio"><label>Apellido paterno</label><br>
+                <article><label>Apellido paterno</label>
                 <input type="text" name="apellido_p" placeholder="Apellido paterno" required></article>
-                <article><label>Apellido materno</label><br>    
+                <article><label>Apellido materno</label>
                 <input type="text" name="apellido_m" placeholder="Apellido Materno" required></article>
                 </div>
                 <label>Telefono</label>
                 <input type="text" name="telefono" placeholder="10 digitos" required>
-                <hr>
-                <label for="contraseña"> Contraseña</label>
-                <input type="password" id="contraseña" placeholder="Al menos 8 caracteres" required>
+                <label for="contraseña-registro"> Contraseña</label>
+                <input type="password" id="contraseña-registro" placeholder="Al menos 8 caracteres" required>
                 <label for="confirmar">Confirmar contraseña</label>
                 <input type="password" id="confirmar" placeholder="Ingrese la contraseña nuevamente" required>
-                <button class ="load" type="submit">Registrarse</button>
+                <button class ="load" type="submit">Registrarse</button><br><br>
+                ¿Ya tienes una cuenta?<br>
+                <button id="btn-login" type="button" class="hover:text-white">Inicia sesión</button>
             </form>
         </div>
-        <form method="dialog">
-            <button id="close"  class="bg-black hover:bg-teal-400 text-white border-none p-3 text-base   lg:text-2xl md:text-xl cursor-pointer transition-colors duration-200 text-center font-bold" >ok</button>
-        </form>
     </dialog>
     <header>
         <div class="flex pl-0"><img src="img/logo2.png" alt="logo de Swarmp" class="logo">
@@ -42,7 +64,7 @@
         <div class="flex items-stretch">
             <button class="bg-black hover:bg-teal-400 text-white border-none p-3 text-base   lg:text-2xl md:text-xl cursor-pointer transition-colors duration-200 text-center font-bold"  type="submit">Registrarse</button>
             <button class="bg-black hover:bg-teal-400 text-white border-none p-3 text-base   lg:text-2xl md:text-xl cursor-pointer transition-colors duration-200 text-center font-bold"  type="submit">Registrarse</button>
-            <button commandfor="dialog" command="show-modal" class="bg-black hover:bg-red-600 text-white border-none p-3 text-base   lg:text-2xl md:text-xl cursor-pointer transition-colors duration-200 text-center font-bold"  id="si" type="submit">iniciar sesion</button>
+            <button commandfor="inicio-sesion" command="show-modal" class="bg-black hover:bg-red-600 text-white border-none p-3 text-base   lg:text-2xl md:text-xl cursor-pointer transition-colors duration-200 text-center font-bold"  id="si" type="submit">iniciar sesion</button>
         </div>
     </header>
     <main class="m-0 p-0">
@@ -50,13 +72,11 @@
             <div id="caja-trasparente">
                 <br><br><br><br>
                 <h1 class="text-lg lg:text-8xl sm:text-base font-sans font-bold pt-10">Bienvenido<br>B.E.E.S</h1>
-                <form action="registro.html">
-                    <h2 ><button class="bg-red-700  hover:bg-red-600 transition delay-150 duration-200 ease-in-out hover:-translate-y-1 
-                        hover:scale-105 text-white font-bold py-1 px-4 mt-0 rounded-full justify-center items-center font-sans text-4xl pb-3"
-                        type="submit">
-                        Registrarse
-                    </button></h2>
-                </form>
+                <h2 ><button commandfor="registro" command="show-modal" class="bg-red-700  hover:bg-red-600 transition delay-150 duration-200 ease-in-out hover:-translate-y-1 
+                    hover:scale-105 text-white font-bold py-1 px-4 mt-0 rounded-full justify-center items-center font-sans text-4xl pb-3"
+                    type="submit">
+                    Registrarse
+                </button></h2>
             </div>
         </div>
         <div class="p-7 justify-center text-xl">

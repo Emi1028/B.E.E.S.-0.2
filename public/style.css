@@ -110,24 +110,23 @@ footer {
     height: 400px;
 }
 dialog {
-    width: 400px;
+    width: 430px;
     max-width: 90%;
-    height: 33rem;
-    margin: 0 auto;
+    max-height: 95vh;
+    overflow-y: auto;
+    margin: auto;
     text-align: center;
-    color: #000;
-    border: #000 solid 2px;
-    border-radius: 10px;
-    padding: 30px;
-    padding-right: 30px;
-    padding-left: 30px;
-    background-color: #00b4ff;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4); 
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    padding: 30px 40px;
+    background: linear-gradient(135deg, #00b4ff 0%, #00d4ff 50%, #00e8ff 100%);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.4), 0 0 30px rgba(0,180,255,0.3);
     transition: scale .3s ease-in-out, display .3s ease allow-discrete;
     scale: 0;
 }
 dialog::backdrop {
-    background: rgba(0, 0, 0, 0.692); /* Fondo detrás del diálogo (modal) */
+    background: rgba(0, 0, 0, 0.4);
 }
 dialog[open]{
     scale: 1;
@@ -136,4 +135,99 @@ dialog[open]{
     @starting-style{
         scale: 0;
     }
+}
+dialog h1 {
+    color: #000;
+    font-size: 2rem;
+    margin: 0;
+    font-weight: 900;
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.3);
+    letter-spacing: 1px;
+}
+dialog label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+dialog input {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border: 2px solid transparent;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    background: #fff;
+    color: #333;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+dialog input::placeholder {
+    color: #aaa;
+}
+dialog input:focus {
+    outline: none;
+    border-color: #00e8ac;
+    box-shadow: 0 4px 12px rgba(0,232,172,0.3);
+    transform: translateY(-2px);
+}
+dialog .apellidos {
+    display: flex;
+    gap: 15px;
+    margin-top: 12px;
+}
+dialog .apellidos article {
+    flex: 1;
+}
+dialog .apellidos input {
+    width: 100%;
+}
+dialog button.load {
+    background: linear-gradient(135deg, #e63946 0%, #f72c3a 100%);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(230,57,70,0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+dialog button.load:hover {
+    background: linear-gradient(135deg, #d62828 0%, #e63946 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(230,57,70,0.5);
+}
+dialog button.load:active {
+    transform: translateY(-1px);
+}
+dialog form[method="dialog"] button {
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+dialog form[method="dialog"] button:hover {
+    background: rgba(0,0,0,0.9);
+    border-color: rgba(255,255,255,0.5);
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
