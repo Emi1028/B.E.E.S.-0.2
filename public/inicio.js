@@ -9,7 +9,6 @@ function nextSlide() {
     index++;
     if (index >= totalSlides - 1) {
         carousel.scrollTo({ left: index * slideWidth, behavior: 'smooth' });
-        
         isResetting = true;
         setTimeout(() => {
             carousel.scrollTo({ left: 0, behavior: 'smooth' }); // salto invisible(no funciona)
@@ -133,7 +132,6 @@ async function checkSession() {
         console.error('Error verificando sesión:', error);
     }
 }
-
 function updateUIForLoggedUser(usuario) {
     // Ocultar botones de login/registro y mostrar datos del usuario
     const btnIniciarSesion = document.getElementById('si');

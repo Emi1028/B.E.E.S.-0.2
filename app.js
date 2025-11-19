@@ -1,10 +1,23 @@
 const express = require('express');
 const session = require('express-session');
+const mysql = require('mysql2/promise');
 const path = require('path');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Configuración de la base de datos
+const pool = mysql.createPool({
+    host: process.env.MYSQL_HOST,
+    port: process.env.MYSQL_PORT,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
 
 // Configuración de middleware
 app.use(express.json());
@@ -23,65 +36,77 @@ app.use(session({
     }
 }));
 
-// Base de datos simulada (en producción usar una BD real)
-const usuarios = [];
-
 // Rutas de autenticación
-app.post('/api/registro', (req, res) => {
-    const { nombre, apellido_p, apellido_m, telefono, contraseña } = req.body;
+app.post('/api/registro', async (req, res) => {
+    const { nombre, apellido_p, apellido_m, telefono, correo, contraseña, password } = req.body;
     
-    // Validar que el usuario no exista
-    const usuarioExiste = usuarios.find(u => u.nombre === nombre && u.telefono === telefono);
-    if (usuarioExiste) {
-        return res.status(400).json({ success: false, message: 'El usuario ya existe' });
+    try {
+        // Concatenar nombre completo
+        const nombreCompleto = `${nombre} ${apellido_p} ${apellido_m}`;
+        const passwordFinal = contraseña || password; // Acepta ambos nombres
+        
+        // Validar que el usuario no exista
+        const [rows] = await pool.query(
+            'SELECT * FROM c_papa WHERE correo = ?',
+            [correo]
+        );
+        
+        if (rows.length > 0) {
+            return res.status(400).json({ success: false, message: 'El usuario ya existe' });
+        }
+        
+        // Insertar nuevo usuario
+        const [result] = await pool.query(
+            'INSERT INTO c_papa (nombre, numero, correo, password) VALUES (?, ?, ?, ?)',
+            [nombreCompleto, telefono, correo, passwordFinal]
+        );
+        
+        const nuevoUsuario = {
+            id: result.insertId,
+            nombre: nombreCompleto,
+            telefono
+        };
+        
+        // Crear sesión
+        req.session.userId = nuevoUsuario.id;
+        req.session.usuario = nuevoUsuario;
+        
+        res.json({ success: true, message: 'Registro exitoso', usuario: req.session.usuario });
+    } catch (error) {
+        console.error('Error en registro:', error);
+        res.status(500).json({ success: false, message: 'Error en el servidor' });
     }
-    
-    // Crear nuevo usuario
-    const nuevoUsuario = {
-        id: usuarios.length + 1,
-        nombre,
-        apellido_p,
-        apellido_m,
-        telefono,
-        contraseña // En producción, NUNCA guardar contraseñas en texto plano, usar bcrypt
-    };
-    
-    usuarios.push(nuevoUsuario);
-    
-    // Crear sesión
-    req.session.userId = nuevoUsuario.id;
-    req.session.usuario = {
-        id: nuevoUsuario.id,
-        nombre: nuevoUsuario.nombre,
-        apellido_p: nuevoUsuario.apellido_p,
-        apellido_m: nuevoUsuario.apellido_m,
-        telefono: nuevoUsuario.telefono
-    };
-    
-    res.json({ success: true, message: 'Registro exitoso', usuario: req.session.usuario });
 });
 
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
     const { nombre, contraseña } = req.body;
     
-    // Buscar usuario
-    const usuario = usuarios.find(u => u.nombre === nombre && u.contraseña === contraseña);
-    
-    if (!usuario) {
-        return res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
+    try {
+        // Buscar usuario
+        const [rows] = await pool.query(
+            'SELECT * FROM c_papa WHERE nombre = ? AND password = ?',
+            [nombre, contraseña]
+        );
+        
+        if (rows.length === 0) {
+            return res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
+        }
+        
+        const usuario = rows[0];
+        
+        // Crear sesión
+        req.session.userId = usuario.id_papa;
+        req.session.usuario = {
+            id: usuario.id_papa,
+            nombre: usuario.nombre,
+            telefono: usuario.numero
+        };
+        
+        res.json({ success: true, message: 'Inicio de sesión exitoso', usuario: req.session.usuario });
+    } catch (error) {
+        console.error('Error en login:', error);
+        res.status(500).json({ success: false, message: 'Error en el servidor' });
     }
-    
-    // Crear sesión
-    req.session.userId = usuario.id;
-    req.session.usuario = {
-        id: usuario.id,
-        nombre: usuario.nombre,
-        apellido_p: usuario.apellido_p,
-        apellido_m: usuario.apellido_m,
-        telefono: usuario.telefono
-    };
-    
-    res.json({ success: true, message: 'Inicio de sesión exitoso', usuario: req.session.usuario });
 });
 
 app.post('/api/logout', (req, res) => {
