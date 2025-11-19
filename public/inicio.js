@@ -4,7 +4,6 @@ const totalSlides = slides.length;
 const slideWidth = slides[0].offsetWidth + 16;
 let index = 0;
 let isResetting = false;
-
 function nextSlide() {
     if (isResetting) return;
     index++;
