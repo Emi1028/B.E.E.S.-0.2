@@ -1,9 +1,10 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Configuración de middleware
 app.use(express.json());
@@ -12,7 +13,7 @@ app.use(express.static('public'));
 
 // Configuración de sesiones
 app.use(session({
-    secret: 'tu-secreto-seguro-cambialo-en-produccion',
+    secret: process.env.SESSION_SECRET || 'fallback-secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: {
