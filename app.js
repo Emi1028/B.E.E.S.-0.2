@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 // Configuración de la base de datos
 const pool = mysql.createPool({
     host: process.env.MYSQL_HOST,
-    port: process.env.MYSQL_PORT,
+    port: process.env.PORT,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
@@ -38,17 +38,16 @@ app.use(session({
 
 // Rutas de autenticación
 app.post('/api/registro', async (req, res) => {
-    const { nombre, apellido_p, apellido_m, telefono, correo, contraseña, password } = req.body;
+    const { nombre, apellido_p, apellido_m, telefono, correo, contraseña } = req.body;
     
     try {
         // Concatenar nombre completo
         const nombreCompleto = `${nombre} ${apellido_p} ${apellido_m}`;
-        const passwordFinal = contraseña || password; // Acepta ambos nombres
         
         // Validar que el usuario no exista
         const [rows] = await pool.query(
             'SELECT * FROM c_papa WHERE correo = ?',
-            [correo]
+            [telefono]
         );
         
         if (rows.length > 0) {
@@ -58,7 +57,7 @@ app.post('/api/registro', async (req, res) => {
         // Insertar nuevo usuario
         const [result] = await pool.query(
             'INSERT INTO c_papa (nombre, numero, correo, password) VALUES (?, ?, ?, ?)',
-            [nombreCompleto, telefono, correo, passwordFinal]
+            [nombreCompleto, telefono, correo, contraseña]
         );
         
         const nuevoUsuario = {
