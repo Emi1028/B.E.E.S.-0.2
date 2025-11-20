@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 // Configuración de la base de datos
 const pool = mysql.createPool({
     host: process.env.MYSQL_HOST,
-    port: process.env.PORT,
+    port: process.env.MYSQL_PORT,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE,
@@ -79,20 +79,16 @@ app.post('/api/registro', async (req, res) => {
 
 app.post('/api/login', async (req, res) => {
     const { nombre, contraseña } = req.body;
-    
     try {
         // Buscar usuario
         const [rows] = await pool.query(
             'SELECT * FROM c_papa WHERE nombre = ? AND password = ?',
             [nombre, contraseña]
-        );
-        
+        );        
         if (rows.length === 0) {
             return res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
         }
-        
         const usuario = rows[0];
-        
         // Crear sesión
         req.session.userId = usuario.id_papa;
         req.session.usuario = {

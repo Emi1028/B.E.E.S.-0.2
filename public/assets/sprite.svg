@@ -77,4 +77,13 @@
   <symbol id="verified" viewBox="0 0 20 20">
     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707a1 1 0 00-1.414-1.414L9 11.172l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
   </symbol>
+  <!-- Close X Icon -->
+  <symbol id="close-x" viewBox="0 0 512 512">
+    <line x1="120" y1="120" x2="392" y2="392"
+          stroke="currentColor" stroke-width="72"
+          stroke-linecap="round" stroke-linejoin="round" />
+    <line x1="392" y1="120" x2="120" y2="392"
+          stroke="currentColor" stroke-width="72"
+          stroke-linecap="round" stroke-linejoin="round" />
+  </symbol>
 </svg>

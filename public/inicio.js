@@ -25,8 +25,8 @@ setInterval(nextSlide, 2000);
 document.addEventListener('DOMContentLoaded', () => {
     const btnRegistro = document.getElementById('btn-registro');
     const dialogInicioSesion = document.getElementById('inicio-sesion');
-    const dialogRegistro = document.getElementById('registro');
     
+    const dialogRegistro = document.getElementById('registro');
     if (btnRegistro && dialogInicioSesion && dialogRegistro) {
         btnRegistro.addEventListener('click', () => {
             dialogInicioSesion.close();
