@@ -1,3 +1,6 @@
+// Actualiza el año en el pie de página
+document.getElementById('year').textContent = new Date().getFullYear();
+// Configuración del carrusel
 const carousel = document.getElementById('carousel');
 const slides = carousel.children;
 const totalSlides = slides.length;

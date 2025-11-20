@@ -66,14 +66,16 @@
             </form>
         </div>
     </dialog>
-    <header>
-        <div class="flex pl-0"><img src="img/logo2.png" alt="logo de Swarmp" class="logo">
+    <header id="nav">
+        <!-- Logo de Swarmp-->
+        <div class="flex pl-0">
+            <img src="img/logo2.png" alt="logo de Swarmp" class="logo">
             <p class="hidden sm:block text-[#ffeb52] font- text-3xl font-bold">Swarmp</p> 
         </div>
         <div class="flex items-stretch">
-            <button class="bg-black hover:bg-teal-400 text-white border-none p-3 text-base lg:text-2xl sm:text-base cursor-pointer transition-colors duration-200 text-center font-bold"  type="submit">Registrarse</button>
-            <button class="bg-black hover:bg-teal-400 text-white border-none p-3 text-base lg:text-2xl sm:text-base cursor-pointer transition-colors duration-200 text-center font-bold"  type="submit">Registrarse</button>
-            <button commandfor="inicio-sesion" command="show-modal" class="bg-black hover:bg-red-600 text-white border-none p-3 text-base   lg:text-2xl md:text-xl cursor-pointer transition-colors duration-200 text-center font-bold"  id="si" type="submit">iniciar sesion</button>
+            <button class="bg-[var(--black)] hover:bg-[var(--primary)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl sm:text-base cursor-pointer transition-colors duration-200 text-center font-bold"  type="submit">Registrarse</button>
+            <button class="bg-[var(--black)] hover:bg-[var(--primary)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl sm:text-base cursor-pointer transition-colors duration-200 text-center font-bold"  type="submit">Registrarse</button>
+            <button commandfor="inicio-sesion" command="show-modal" class="bg-[var(--black)] hover:bg-[var(--accent-red-hover)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl md:text-xl cursor-pointer transition-colors duration-200 text-center font-bold"  id="si" type="submit">iniciar sesion</button>
         </div> 
     </header>
     <main class="m-0 p-0">
@@ -143,7 +145,7 @@
             progreso simple y visible a través de datos dentro de la misma aplicación. </p> 
     </main>
     <footer>
-        © 2023 Swarmp Todos los derechos reservados.
+        © <span id="year"></span> Swarmp Todos los derechos reservados.
     </footer>
     <script src="front/inicio.js"></script>
     <script src="front/carousel.js"></script>

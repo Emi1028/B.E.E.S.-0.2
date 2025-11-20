@@ -108,11 +108,28 @@ async function checkSession() {
     }
 }
 function updateUIForLoggedUser(usuario) {
-    // Ocultar botones de login/registro y mostrar datos del usuario
-    const btnIniciarSesion = document.getElementById('si');
-    if (btnIniciarSesion) {
-        btnIniciarSesion.textContent = `Hola, ${usuario.nombre}`;
-        btnIniciarSesion.onclick = () => logout();
+    // Reemplazar todo el contenido del nav
+    const nav = document.getElementById('nav');
+    if (nav) {
+        nav.innerHTML = `
+        <div class="flex pl-0">
+            <img src="img/logo2.png" alt="logo de Swarmp" class="logo">
+            <p class="hidden sm:block text-[#ffeb52] font- text-3xl font-bold">Swarmp</p> 
+        </div>
+        <div class="flex items-stretch">
+            <button class="bg-[var(--black)] hover:bg-[var(--primary)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl sm:text-base cursor-pointer transition-colors duration-200 text-center font-bold"  type="submit">Registrarse</button>
+            <button class="bg-[var(--black)] hover:bg-[var(--primary)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl sm:text-base cursor-pointer transition-colors duration-200 text-center font-bold"  type="submit">Registrarse</button>
+            <button class="bg-[var(--black)] hover:bg-[var(--accent-red-hover)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl md:text-xl cursor-pointer transition-colors duration-200 text-center font-bold"  id="si" type="submit">Hola, ${usuario.nombre}</button>
+        </div>`;
+        
+        // Asignar el evento de logout al nuevo botón
+        const btnSi = document.getElementById('si');
+        if (btnSi) {
+            btnSi.onclick = (e) => {
+                e.preventDefault();
+                logout();
+            };
+        }
     }
 }
 
