@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const mysql = require('mysql2/promise');
+const bcrypt = require('bcrypt');
 const path = require('path');
 require('dotenv').config();
 
@@ -41,12 +42,12 @@ app.post('/api/registro', async (req, res) => {
     const { nombre, apellido_p, apellido_m, telefono, correo, contraseña } = req.body;
     
     try {
-        // Concatenar nombre completo
-        const nombreCompleto = `${nombre} ${apellido_p} ${apellido_m}`;
+        // Concatenar apellidos completos
+        const apellidoCompleto = `${apellido_p} ${apellido_m}`;
         
         // Validar que el usuario no exista
         const [rows] = await pool.query(
-            'SELECT * FROM c_papa WHERE correo = ?',
+            'SELECT * FROM c_papa WHERE telefono = ?',
             [telefono]
         );
         
@@ -54,15 +55,19 @@ app.post('/api/registro', async (req, res) => {
             return res.status(400).json({ success: false, message: 'El usuario ya existe' });
         }
         
-        // Insertar nuevo usuario
+        // Hashear contraseña
+        const hashedPassword = await bcrypt.hash(contraseña, 10);
+        
+        // Insertar nuevo usuario con fecha de registro
         const [result] = await pool.query(
-            'INSERT INTO c_papa (nombre, numero, correo, password) VALUES (?, ?, ?, ?)',
-            [nombreCompleto, telefono, correo, contraseña]
+            'INSERT INTO c_papa (nombre, apellido, telefono, correo, password) VALUES (?, ?, ?, ?, ?)',
+            [nombre, apellidoCompleto, telefono, correo, hashedPassword]
         );
         
         const nuevoUsuario = {
             id: result.insertId,
-            nombre: nombreCompleto,
+            nombre,
+            apellido: apellidoCompleto,
             telefono
         };
         
@@ -82,13 +87,20 @@ app.post('/api/login', async (req, res) => {
     try {
         // Buscar usuario
         const [rows] = await pool.query(
-            'SELECT * FROM c_papa WHERE nombre = ? AND password = ?',
-            [nombre, contraseña]
+            'SELECT * FROM c_papa WHERE nombre = ?',
+            [nombre]
         );        
         if (rows.length === 0) {
             return res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
         }
         const usuario = rows[0];
+        
+        // Verificar contraseña
+        const passwordMatch = await bcrypt.compare(contraseña, usuario.password);
+        if (!passwordMatch) {
+            return res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
+        }
+        
         // Crear sesión
         req.session.userId = usuario.id_papa;
         req.session.usuario = {
