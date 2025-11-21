@@ -2,17 +2,18 @@
     /* Colores principales */
     --primary: #2dd4bf;
     --primary-shadow:  #3fc1c59b;
-    
+    --logo-color: #edce7a;
     /* Colores de acento */
     --accent-red: #d61515;
     --accent-red-hover: #e32929;
     --shadow-bottom:rgba(230,57,70,0.5) ;
     
     /* Colores de gradiente */
-    --gradient-blue-start: #00b4ff;
-    --gradient-blue-mid: #00d4ff;
-    --gradient-blue-end: #00e8ff;
-    --dialog-fondo:linear-gradient(135deg, var(--gradient-blue-start) 0%, var(--gradient-blue-mid) 50%, var(--gradient-blue-end) 100%);
+    --gradient-blue-start: #4FB19D;
+    --gradient-blue-mid: #75BBC1;
+    --gradient-blue-end: #9AC5E5;
+    --dialog-fondo:#9AC5E5;
+    /*linear-gradient(135deg, var(--gradient-blue-start) 0%, var(--gradient-blue-mid) 50%, var(--gradient-blue-end) 100%)*/;
     /* Colores neutros */
     --black: #000000;
     --border-img: #000000;
@@ -20,7 +21,7 @@
     --Twhite: #ffffff;
     --gray-light: #aaa;
     --gray-medium: #2d343a;
-    --gray-dark: #333;
+    --gray-dark: #2d2d2d;
 }
 body {
     font-family: Arial, sans-serif;
@@ -115,7 +116,7 @@ dialog {
     border-radius: 25px;
     padding: 30px 40px;
     background: var(--dialog-fondo);
-    box-shadow: 0 15px 50px rgba(0,0,0,0.4), 0 0 30px rgba(0,180,255,0.3);
+    /*box-shadow: 0 15px 50px rgba(0,0,0,0.4), 0 0 30px rgba(0,180,255,0.3);*/
     transition: scale .3s ease-in-out, display .3s ease allow-discrete;
     scale: 0;
 }
