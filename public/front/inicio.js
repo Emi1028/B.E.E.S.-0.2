@@ -62,6 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const contraseña = formRegistro.querySelector('#contraseña-registro').value;
             const confirmar = formRegistro.querySelector('#confirmar').value;
             
+            if(telefono.length !== 10){
+                alert('El número de teléfono debe tener 10 dígitos');
+                return;
+            }
+
             if (contraseña !== confirmar) {
                 alert('Las contraseñas no coinciden');
                 return;
@@ -126,12 +131,14 @@ function updateUIForLoggedUser(usuario) {
                 <div class="relative inline-flex items-center">
 
                     <button id="profileBtn" class="mr-2 w-10 h-10 rounded-full overflow-hidden border-2 border-[var(--white)] hover:border-[var(--primary)] transition-all duration-200">
-                        <img src="img/tetris.png" alt="Avatar" class="w-full h-full object-cover">
+                        <svg width="full" height="full" class="text-[var(--gray-medium)] hover:text-[var(--gray-light)]">
+                            <use xlink:href="./assets/sprite.svg#avatar"/>
+                        </svg>
                     </button>
 
                     <div id="dropdown" class="hidden absolute right-0 top-full mt-2 mr-2 w-64 bg-[var(--gray-dark)] text-[var(--Twhite)] rounded-xl shadow-xl p-3 space-y-2 z-50">
-                        <a href="#" class="block px-2 py-2 rounded-lg hover:bg-[var(--gray-medium)] text-[var(--Twhite)]">Perfil</a>
-                        <a href="#" class="block px-2 py-2 rounded-lg hover:bg-[var(--gray-medium)] text-[var(--Twhite)]">Niños</a>
+                        <a href="/exitoso" id="perfil" class="block px-2 py-2 rounded-lg hover:bg-[var(--gray-medium)] text-[var(--Twhite)]">Perfil</a>
+                        <a href="#" id="niños" class="block px-2 py-2 rounded-lg hover:bg-[var(--gray-medium)] text-[var(--Twhite)]">Niños</a>
                         <hr class="border-[var(--accent-red)]">
                         <a href="#" id="logoutLink" class="block px-2 py-2 rounded-lg hover:bg-[var(--gray-medium)] text-[var(--Twhite)]">Cerrar sesión</a>
                     </div>

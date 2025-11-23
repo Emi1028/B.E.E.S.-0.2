@@ -39,20 +39,28 @@ app.use(session({
 
 // Rutas de autenticación
 app.post('/api/registro', async (req, res) => {
-    const { nombre, apellido_p, apellido_m, telefono, correo, contraseña } = req.body;
+    const { u_nombre, nombre, apellido_p, apellido_m, telefono, correo, contraseña } = req.body;
     
     try {
         // Concatenar apellidos completos
         const apellidoCompleto = `${apellido_p} ${apellido_m}`;
         
-        // Validar que el usuario no exista
-        const [rows] = await pool.query(
+        // Validar que el nombre de usuario no exista
+        const [rowsNombre] = await pool.query(
+            'SELECT * FROM c_papa WHERE u_nombre = ?',
+            [u_nombre]
+        );
+        if (rowsNombre.length > 0) {
+            return res.status(400).json({ success: false, message: 'El nombre de usuario ya está registrado' });
+        }
+        
+        // Validar que el teléfono no exista
+        const [rowsTelefono] = await pool.query(
             'SELECT * FROM c_papa WHERE telefono = ?',
             [telefono]
         );
-        
-        if (rows.length > 0) {
-            return res.status(400).json({ success: false, message: 'El usuario ya existe' });
+        if (rowsTelefono.length > 0) {
+            return res.status(400).json({ success: false, message: 'El número de teléfono ya está registrado' });
         }
         
         // Hashear contraseña
@@ -60,10 +68,10 @@ app.post('/api/registro', async (req, res) => {
         
         // Insertar nuevo usuario con fecha de registro
         const [result] = await pool.query(
-            'INSERT INTO c_papa (nombre, apellido, telefono, correo, password) VALUES (?, ?, ?, ?, ?)',
-            [nombre, apellidoCompleto, telefono, correo, hashedPassword]
+            'INSERT INTO c_papa (u_nombre, nombre, apellido, telefono, correo, password) VALUES (?, ?, ?, ?, ?, ?)',
+            [u_nombre,nombre, apellidoCompleto, telefono, correo, hashedPassword]
         );
-        
+        //Abrir sesión despues del registro
         const nuevoUsuario = {
             id: result.insertId,
             nombre,

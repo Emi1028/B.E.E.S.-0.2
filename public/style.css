@@ -1,19 +1,20 @@
 :root{
-    /* Colores principales */
-    --primary: #2dd4bf;
-    --primary-shadow:  #3fc1c59b;
-    --logo-color: #edce7a;
+    /* Paleta "Wrapped in Wool" */
+    --primary: #4FB19D;
+    --primary-shadow: #4FB19D80;
+    --logo-color: #EDCE7A;
+    
     /* Colores de acento */
-    --accent-red: #d61515;
-    --accent-red-hover: #e32929;
-    --shadow-bottom:rgba(230,57,70,0.5) ;
+    --accent-red: #C98C9A;
+    --accent-red-hover: #E5C6C3;
+    --shadow-bottom: rgba(201, 140, 154, 0.5);
     
     /* Colores de gradiente */
-    --gradient-blue-start: #4FB19D;
+    --esmeralda: #4FB19D;
+    --one-esmeralda: #4FB19D;
     --gradient-blue-mid: #75BBC1;
-    --gradient-blue-end: #9AC5E5;
-    --dialog-fondo:#9AC5E5;
-    /*linear-gradient(135deg, var(--gradient-blue-start) 0%, var(--gradient-blue-mid) 50%, var(--gradient-blue-end) 100%)*/;
+    --dialog-fondo: #9AC5E5;
+    
     /* Colores neutros */
     --black: #000000;
     --border-img: #000000;
@@ -22,6 +23,16 @@
     --gray-light: #aaa;
     --gray-medium: #2d343a;
     --gray-dark: #2d2d2d;
+    
+    /* Colores adicionales de la paleta 
+    
+    Por si se necesitan
+    */
+    --blue-wool: #9AC5E5;
+    --teal-wool: #4FB19D;
+    --yellow-wool: #EDCE7A;
+    --mauve-wool: #C98C9A;
+    --pink-wool: #E5C6C3;
 }
 body {
     font-family: Arial, sans-serif;
@@ -150,7 +161,7 @@ dialog label {
 }
 dialog input {
     width: 100%;
-    padding: 10px 14px;
+    padding: 6px 14px;
     margin-bottom: 12px;
     border: 2px solid transparent;
     border-radius: 25px;
@@ -161,19 +172,21 @@ dialog input {
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
+#inicio-sesion input{
+    padding: 10px 14px;
+}
 dialog input::placeholder {
     color: var(--gray-light);
 }
 dialog input:focus {
     outline: none;
-    border-color: #00e8ac;
-    box-shadow: 0 4px 12px rgba(0,232,172,0.3);
+    border-color:var(--one-esmeralda) ;
     transform: translateY(-2px);
 }
 dialog .apellidos {
     display: flex;
     gap: 15px;
-    margin-top: 12px;
+    margin-top: 0px;
 }
 dialog button.load {
     background: var(--accent-red);

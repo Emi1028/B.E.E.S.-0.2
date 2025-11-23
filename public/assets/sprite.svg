@@ -86,4 +86,11 @@
           stroke="currentColor" stroke-width="72"
           stroke-linecap="round" stroke-linejoin="round" />
   </symbol>
+  <!-- Avatar Icon -->
+  <symbol id="avatar" viewBox="0 0 512 512">
+    <!-- head -->
+    <circle cx="256" cy="170" r="70" fill="#c6c6c6" />
+    <!-- body -->
+    <path d="M120 420c0-82 61-140 136-140s136 58 136 140H120z" fill="#c6c6c6" />
+  </symbol>
 </svg>

@@ -46,13 +46,15 @@
                 </form>
             </div>
             <form name="registro">
-                <label>Nombre</label>
+                <label>Nombre de usuario</label>
+                <input type="text" name="u_nombre" placeholder="nombre de la cuenta" required>
+                <label>Nombres</label>
                 <input type="text" name="nombre" placeholder="Nombres" required>
                 <div class="apellidos">
-                <article><label>Apellido paterno</label>
-                <input type="text" name="apellido_p" placeholder="Apellido paterno" required></article>
-                <article><label>Apellido materno</label>
-                <input type="text" name="apellido_m" placeholder="Apellido Materno" required></article>
+                    <article><label>Apellido paterno</label>
+                    <input type="text" name="apellido_p" placeholder="Apellido paterno" required></article>
+                    <article><label>Apellido materno</label>
+                    <input type="text" name="apellido_m" placeholder="Apellido Materno" required></article>
                 </div>
                 <label>Telefono</label>
                 <input type="text" name="telefono" placeholder="10 digitos" required>
@@ -60,8 +62,8 @@
                 <input type="password" id="contraseña-registro" placeholder="Al menos 8 caracteres" required>
                 <label for="confirmar">Confirmar contraseña</label>
                 <input type="password" id="confirmar" placeholder="Ingrese la contraseña nuevamente" required>
-                <button class ="load" type="submit">Registrarse</button><br><br>
-                ¿Ya tienes una cuenta?<br>
+                <button class ="load" type="submit">Registrarse</button><br>
+                <p class="pt-1">¿Ya tienes una cuenta?</p>
                 <button id="btn-login" type="button" class="hover:text-[var(--Twhite)]">Inicia sesión</button>
             </form>
         </div>
