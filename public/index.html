@@ -23,7 +23,7 @@
             </div>
             <form name="inicio-sesion" action="exitoso/">
                 <label>Nombre</label>
-                <input type="text" name="nombre" placeholder="Nombres" required>
+                <input type="text" name="u_nombre" placeholder="Nombres" required>
                 <label for="contraseña"> Contraseña</label>
                 <input type="password" name="contraseña" id="contraseña" placeholder="Al menos 8 caracteres" required>
                 <button class ="load" type="submit">Iniciar sesión</button><br><br>
@@ -68,6 +68,8 @@
             </form>
         </div>
     </dialog>
+    <div class="m-14"><!--es solo por estetica--></div>
+    <!--Barra de navegación-->
     <header id="nav">
         <!-- Logo de Swarmp-->
         <div class="flex pl-0">
@@ -76,7 +78,7 @@
         </div>
         <div class="flex items-stretch">
             <button class="bg-[var(--black)] hover:bg-[var(--primary)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl sm:text-base cursor-pointer transition-colors duration-200 text-center font-bold"  type="submit">Registrarse</button>
-            <button class="bg-[var(--black)] hover:bg-[var(--primary)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl sm:text-base cursor-pointer transition-colors duration-200 text-center font-bold"  type="submit">Registrarse</button>
+            <a type="button" href="exitoso/" class="bg-[var(--black)] hover:bg-[var(--primary)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl sm:text-base cursor-pointer transition-colors duration-200 text-center font-bold"  type="submit">Registrarse</a>
             <button commandfor="inicio-sesion" command="show-modal" class="bg-[var(--black)] hover:bg-[var(--accent-red-hover)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl md:text-xl cursor-pointer transition-colors duration-200 text-center font-bold"  id="si" type="submit">Iniciar sesion</button>
         </div>
     </header>
@@ -85,13 +87,14 @@
             <div id="caja-trasparente">
                 <br><br><br>
                 <h1 class="text-7xl sm:text-7xl md:text-7xl lg:text-7xl xl:text-8xl font-sans font-bold pt-10">Bienvenido<br>B.E.E.S</h1><br>
-                <h2><button commandfor="registro" command="show-modal" class="bg-[var(--accent-red)] hover:bg-[var(--accent-red-hover)] transition-all duration-300 ease-in-out hover:-translate-y-1 
+                <h2 id="btn-ver-niños"><button commandfor="registro" command="show-modal" class="bg-[var(--accent-red)] hover:bg-[var(--accent-red-hover)] transition-all duration-300 ease-in-out hover:-translate-y-1 
                     text-[var(--Twhite)] font-bold py-1 px-4 sm:px-6 md:px-8 mt-0 rounded-full justify-center items-center font-sans text-xl sm:text-2xl md:text-3xl lg:text-4xl pb-3"
                     type="submit">
                     Registrarse
                 </button></h2>
             </div>
         </div>
+        <!--Descripción de B.E.E.S-->
         <div class="p-7 justify-center text-xl">
             <br>    
             <h2 class="text-3xl">¿Qué es B.E.E.S?</h2>
@@ -115,6 +118,7 @@
                 </ul>
             </div>
         </div>
+        <!--Carrusel de imagenes-->
         <div>
             <div id="carousel" class="flex overflow-x-auto bar scroll-snap-x snap-mandatory gap-4 py-4">
                 <div class="scroll-snap-center flex-shrink-0 border-[12px] rounded-2xl bg-[var(--border-img)] border-[var(--border-img)]">
@@ -140,11 +144,13 @@
                 </div>
             </div>
         </div>
+        <!--Descripción de la aplicación-->
         <p class="p-7 justify-center text-xl ">
             Hay pocas aplicaciones en el mercado que abarcan esa problemática siendo la mayoría aplicaciones de gestión o 
             bitácoras, mientras nosotros nos efocamos en las actividades y experiencias digitales para mejorar la concentración, 
             retención, agilidad mental y razonamiento. Estas actividades mejoraran las actividades cognitivas del niño con un 
-            progreso simple y visible a través de datos dentro de la misma aplicación. </p> 
+            progreso simple y visible a través de datos dentro de la misma aplicación. 
+        </p> 
     </main>
     <footer>
         © <span id="year"></span> Swarmp Todos los derechos reservados.

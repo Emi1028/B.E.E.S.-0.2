@@ -39,7 +39,7 @@ app.use(session({
 
 // Rutas de autenticación
 app.post('/api/registro', async (req, res) => {
-    const { u_nombre, nombre, apellido_p, apellido_m, telefono, correo, contraseña } = req.body;
+    const { u_nombre, nombre, apellido_p, apellido_m, telefono, contraseña } = req.body;
     
     try {
         // Concatenar apellidos completos
@@ -68,8 +68,8 @@ app.post('/api/registro', async (req, res) => {
         
         // Insertar nuevo usuario con fecha de registro
         const [result] = await pool.query(
-            'INSERT INTO c_papa (u_nombre, nombre, apellido, telefono, correo, password) VALUES (?, ?, ?, ?, ?, ?)',
-            [u_nombre,nombre, apellidoCompleto, telefono, correo, hashedPassword]
+            'INSERT INTO c_papa (u_nombre, nombre, apellido, telefono, password) VALUES (?, ?, ?, ?, ?)',
+            [u_nombre,nombre, apellidoCompleto, telefono, hashedPassword]
         );
         //Abrir sesión despues del registro
         const nuevoUsuario = {
@@ -91,12 +91,12 @@ app.post('/api/registro', async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
-    const { nombre, contraseña } = req.body;
+    const { u_nombre, contraseña } = req.body;
     try {
         // Buscar usuario
         const [rows] = await pool.query(
-            'SELECT * FROM c_papa WHERE nombre = ?',
-            [nombre]
+            'SELECT * FROM c_papa WHERE u_nombre = ?',
+            [u_nombre]
         );        
         if (rows.length === 0) {
             return res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
@@ -113,8 +113,8 @@ app.post('/api/login', async (req, res) => {
         req.session.userId = usuario.id_papa;
         req.session.usuario = {
             id: usuario.id_papa,
-            nombre: usuario.nombre,
-            telefono: usuario.numero
+            u_nombre: usuario.u_nombre,
+            telefono: usuario.telefono
         };
         
         res.json({ success: true, message: 'Inicio de sesión exitoso', usuario: req.session.usuario });

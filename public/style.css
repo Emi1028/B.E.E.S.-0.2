@@ -6,6 +6,7 @@
     
     /* Colores de acento */
     --accent-red: #C98C9A;
+    --pink:#D7A9AF;
     --accent-red-hover: #E5C6C3;
     --shadow-bottom: rgba(201, 140, 154, 0.5);
     
@@ -48,7 +49,12 @@ header {
     justify-content: space-between;
     align-items: center;
     size: 2.5rem;
-
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    margin: 0;
+    z-index:1001
 }
 footer {
     background-color: var(--black);    
