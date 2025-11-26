@@ -35,10 +35,35 @@
     --mauve-wool: #C98C9A;
     --pink-wool: #E5C6C3;
 }
-
-div {
-    width: 400px;
-    max-width: 90%;
+body {
+    margin:0;
+    padding-top:88px;
+    background-color: var(--gradient-blue-mid);
+    line-height:1.45;
+    font-family: Arial, sans-serif;  
+}
+header {
+    display: flex;
+    background-color:var(--black);
+    font-size: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+    size: 2.5rem;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    margin: 0;
+    z-index:1001
+}
+main{
+    max-width:190vh;
+    margin:28px auto;
+    padding:0 20px
+}
+.container{
+    width: 190vh;
+    max-width: 95vw;
     height: 19rem;
     margin: 0 auto;
     text-align: center;
@@ -51,22 +76,11 @@ div {
     background-color: var(--dialog-fondo);
     box-shadow: 0 4px 10px rgba(0,0,0,0.4); 
 }
-p {
-    font-size: 1.5rem;
+.logo{
+    width: 48.6px;
+    height: 40px;
 }
-body {
-    display: flex;
-    justify-content: center;     
-    align-items: center;         
-    height: 100vh;               
-    margin: 0;
-    background-color: var(--gradient-blue-mid);
-    justify-content: center;
-    align-items: center;
-    font-family: 'Segoe UI', sans-serif;      
-}
-
-button{
+.regresar{
     background: var(--accent-red);
     color: var(--white);
     border: none;
@@ -83,6 +97,6 @@ button{
     font-weight: bold;
     
 }
-button:hover{
+.regresar:hover{
     background: var(--accent-red-hover);
 }

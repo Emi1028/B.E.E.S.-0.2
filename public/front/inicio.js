@@ -1,9 +1,10 @@
 // Manejo de dialogs
 document.addEventListener('DOMContentLoaded', () => {
+    checkSession();
     const btnRegistro = document.getElementById('btn-registro');
     const dialogInicioSesion = document.getElementById('inicio-sesion');
-    
     const dialogRegistro = document.getElementById('registro');
+
     if (btnRegistro && dialogInicioSesion && dialogRegistro) {
         btnRegistro.addEventListener('click', () => {
             dialogInicioSesion.close();
@@ -124,8 +125,6 @@ function updateUIForLoggedUser(usuario) {
             <p class="hidden sm:block text-[var(--logo-color)] font- text-3xl font-bold">Swarmp</p> 
         </div>
         <div class="flex items-stretch">
-            <button class="bg-[var(--black)] hover:bg-[var(--primary)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl sm:text-base cursor-pointer transition-colors duration-200 text-center font-bold" type="submit">Registrarse</button>
-            <button class="bg-[var(--black)] hover:bg-[var(--primary)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl sm:text-base cursor-pointer transition-colors duration-200 text-center font-bold" type="submit">Registrarse</button>
             <div class="flex items-center gap-1">
                 <p class="bg-[var(--black)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl md:text-xl font-bold m-0">
                     Hola, ${usuario.u_nombre}
