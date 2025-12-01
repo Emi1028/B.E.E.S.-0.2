@@ -1,35 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const dialogRegistro = document.getElementById('Agregar-perfiles');
-    const formRegistro = document.querySelector('form[name="inicio-sesion"]');
-    if (formRegistro) {
-        formRegistro.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const n_nombre = formRegistro.querySelector('input[name="n_nombre"]').value;
-            if (!n_nombre.trim()) {
-                return alert("El nombre no puede estar vacío");
-            }            
-            try {
-                const response = await fetch('http://localhost:3000/api/CrearPerfil', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'include',
-                    body: JSON.stringify({n_nombre})
-                });
-                const data = await response.json();
-                
-                if (data.success) {
-                    alert('Perfil creado exitosamente');
-                    dialogRegistro.close();
-                    location.reload(); // Recargar para actualizar la interfaz
-                } else {
-                    alert(data.message || 'Error al crear perfil');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error de conexión');
-            }
-        });
-    }
     checkSession();
 });
 
@@ -56,7 +25,7 @@ function updateUIForLoggedUser(usuario) {
                         </svg>
                     </button>
                     <div id="dropdown" class="hidden absolute right-0 top-full mt-2 mr-2 w-64 bg-[var(--dialog-fondo)] text-[var(--Twhite)] rounded-xl shadow-xl p-3 space-y-2 z-50">
-                        <a href="../Perfil" id="perfil" class="block px-2 py-2 rounded-lg hover:bg-[var(--gradient-blue-mid)] text-[var(--Twhite)]">Perfil</a>
+                        <a href="../Perfil/" id="perfil" class="block px-2 py-2 rounded-lg hover:bg-[var(--gradient-blue-mid)] text-[var(--Twhite)]">Perfil</a>
                         <a href="../menu-niños/" class="block px-2 py-2 rounded-lg hover:bg-[var(--gradient-blue-mid)] text-[var(--Twhite)]">Niños</a>
                         <hr class="border-[var(--one-esmeralda)]">
                         <a href="#" id="logoutLink" class="block px-2 py-2 rounded-lg hover:bg-[var(--gradient-blue-mid)] text-[var(--Twhite)]">Cerrar sesión</a>
@@ -106,16 +75,20 @@ function updateUIForLoggedUser(usuario) {
     if (bt) {
         bt.innerHTML = `
             <main>
-                <div class="sm:col-span-2 bg-[var(--blue-wool)] border-[5px] rounded-lg shadow p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="md:col-span-2 bg-[var(--blue-wool)] border-[3px] rounded-lg shadow p-4">
+                    <spam class="block w-full text-left mb-4">
+                        <button id="ver-niños" class="bg-[var(--primary)] text-white px-4 py-2 rounded-lg hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200">
+                            Ver Niños
+                        </button>
+                    </spam>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         <!-- Aquí se agregarán los niños dinámicamente -->
-                        <button commandfor="Agregar-perfiles" command="show-modal" class="cursor-pointer bg-[var(--primary-shadow)] border-[5px] border-[var(--primary-shadow)] rounded-lg hover:bg-[var(--primary-shadow-hover)] hover:border-[var(--primary-shadow-hover)] py-52 text-center justify-center items-center flex flex-col">
-                            <div class="bg-black rounded-full p-2 mb-2">
-                                <svg width="40px" height="40px" class="text-[var(--gray-medium)] hover:text-[var(--gray-light)]">
-                                    <use xlink:href="../assets/sprite.svg#plus-icon"/>
-                                </svg>
-                            </div>
-                        Agregar Perfil <br>de un nuevo niño</button>
+                        <div class="bg-white p-36">hola</div>
+                        <div class="bg-white p-36">hola</div>
+                        <div class="bg-white p-36">hola</div>
+                        <div class="bg-white p-36">hola</div>
+                        <div class="bg-white p-36">hola</div>
+                        <div class="bg-white p-36">hola</div>
                     </div>
                 </div>
             </main>`;
@@ -124,7 +97,7 @@ function updateUIForLoggedUser(usuario) {
             const btn_ver = document.getElementById('ver-niños');
             if (btn_ver) {
                 btn_ver.addEventListener('click', (e) => {
-                    window.location.href = 'menu-niños/';
+                    window.location.href = '../menu-niños/';
                 });
             }
         }, 0);

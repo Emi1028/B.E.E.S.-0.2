@@ -9,22 +9,26 @@
         <title>web B.E.E.S</title>
     </head>
     <body>
-        <dialog id="Agregar-perfiles">
-            <div>
+        <dialog id="inicio-sesion">
+            <div class="container">
                 <div class="flex justify-between">
-                    <h1>Agregar un perfil de niño</h1>
+                    <h1>Inicio de sesión</h1>
                     <form method="dialog">
                         <button id="close" type="submit">
                             <svg width="26" height="26" class="text-[var(--gray-medium)] hover:text-[var(--gray-light)]">
-                                <use xlink:href="../assets/sprite.svg#close-x"/>
+                                <use xlink:href="./assets/sprite.svg#close-x"/>
                             </svg>
                         </button>
                     </form>
                 </div>
-                <form name="inicio-sesion">
-                    <label for="n_nombre">Nombre</label>
-                    <input type="text" name="n_nombre" placeholder="Nombres" required>
-                    <button class ="load" type="submit">Crear Perfil</button><br>
+                <form name="inicio-sesion" action="exitoso/">
+                    <label>Nombre</label>
+                    <input type="text" name="u_nombre" placeholder="Nombres" required>
+                    <label for="contraseña"> Contraseña</label>
+                    <input type="password" name="contraseña" id="contraseña" placeholder="Al menos 8 caracteres" required>
+                    <button class ="load" type="submit">Iniciar sesión</button><br><br>
+                    ¿No tienes cuenta?<br>
+                    <button id="btn-registro" type="button" class="hover:text-[var(--Twhite)]">Regístrate</button>
                 </form>
             </div>
         </dialog>
@@ -43,8 +47,8 @@
                 <div class="w-[400px] max-w-[90%] h-[17rem] text-center text-[var(--white)]
                             border-2 border-[var(--black)] rounded-[10px] p-[30px]
                             bg-[var(--blue-wool)] shadow-[0_4px_10px_rgba(0,0,0,0.4)]">
-                    <h1 class="text-4xl mt-2 mb-3 font-semibold">No pude acceder</h1>
-                    <p class="text-[1.5rem]">debe regresar al inicio<br>Gracias por por su comprecion</p>
+                    <h1 class="text-3xl mt-2 mb-3 font-semibold">Requiere iniciar sesión</h1>
+                    <p class="text-[1.5rem]">inicie sesión<br>Gracias por por su comprecion</p>
                     <br>
                     <form action="../index.html">
                         <button type="submit" class="bg-[var(--accent-red)] text-[var(--white)] border-none rounded-[30px]
@@ -59,5 +63,5 @@
             </main>
         </div>
     </body>
-    <script src="../front/m_niño.js"></script>
+    <script src="../front/m_perfil.js"></script>
 </html>

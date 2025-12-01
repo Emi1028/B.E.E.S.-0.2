@@ -93,4 +93,13 @@
     <!-- body -->
     <path d="M120 420c0-82 61-140 136-140s136 58 136 140H120z" fill="#c6c6c6" />
   </symbol>
+  <!-- Plus Icon -->
+  <symbol id="plus-icon" viewBox="0 0 512 512">
+    <line x1="256" y1="120" x2="256" y2="392"
+          stroke="currentColor" stroke-width="72"
+          stroke-linecap="round" />
+    <line x1="120" y1="256" x2="392" y2="256"
+          stroke="currentColor" stroke-width="72"
+          stroke-linecap="round" />
+  </symbol>
 </svg>

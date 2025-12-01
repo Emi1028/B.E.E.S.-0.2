@@ -2,7 +2,6 @@
     /* Paleta "Wrapped in Wool" */
     --primary: #4FB19D;
     --primary-shadow: #4FB19D80;
-    --primary-shadow-hover: #4fb19d57;
     --logo-color: #EDCE7A;
     
     /* Colores de acento */
@@ -62,10 +61,46 @@ main{
     margin:28px auto;
     padding:0 20px
 }
+.container{
+    width: 190vh;
+    max-width: 95vw;
+    height: 19rem;
+    margin: 0 auto;
+    text-align: center;
+    color: var(--white);
+    border: var(--black) solid 2px;
+    border-radius: 10px;
+    padding: 30px;
+    padding-right: 30px;
+    padding-left: 30px;
+    background-color: var(--dialog-fondo);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4); 
+}
 .logo{
     width: 48.6px;
     height: 40px;
 }
+.regresar{
+    background: var(--accent-red);
+    color: var(--white);
+    border: none;
+    border-radius: 30px;
+    padding: 10px ;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-left: 5.5rem;
+    margin-right: 5.5rem;
+    margin-top: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    
+}
+.regresar:hover{
+    background: var(--accent-red-hover);
+}
+
 dialog {
     width: 430px;
     max-width: 90%;
@@ -112,7 +147,7 @@ dialog label {
 }
 dialog input {
     width: 100%;
-    padding: 10px 14px;
+    padding: 6px 14px;
     margin-bottom: 12px;
     border: 2px solid transparent;
     border-radius: 25px;
@@ -122,6 +157,9 @@ dialog input {
     color: var(--gray-dark);
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+#inicio-sesion input{
+    padding: 10px 14px;
 }
 dialog input::placeholder {
     color: var(--gray-light);
