@@ -99,17 +99,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     async function checkSession() {
-    try {
-        const response = await fetch('/api/session');
-        const data = await response.json();
-        
-        if (data.autenticado) {
-            // Usuario autenticado - actualizar interfaz
-            updateUIForLoggedUser(data.usuario);
+        try {
+            const response = await fetch('/api/session', {
+                method: 'GET',
+                credentials: 'include'
+            });
+            if (response.status === 401) {
+                // No hay sesión activa, NO es un error
+                return;
+            }
+            if (!response.ok) {
+                throw new Error("Error inesperado en /api/session");
+            }
+            const data = await response.json();
+            
+            if (data.autenticado) {
+                // Usuario autenticado - actualizar interfaz
+                updateUIForLoggedUser(data.usuario);
+            }
+        } catch (error) {
+            console.error('Error verificando sesión:', error);
         }
-    } catch (error) {
-        console.error('Error verificando sesión:', error);
-    }
     }
     function updateUIForLoggedUser(usuario) {
         // Reemplazar todo el contenido del nav
@@ -129,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </p>
                     <div class="relative inline-flex items-center">
                         <button id="profileBtn" class="mr-2 w-10 h-10 rounded-full overflow-hidden border-2 border-[var(--white)] hover:border-[var(--primary)] transition-all duration-200">
-                            <svg width="full" height="full" class="text-[var(--gray-medium)] hover:text-[var(--gray-light)]">
+                            <svg width="100%" height="100%" class="text-[var(--gray-medium)] hover:text-[var(--gray-light)]">
                                 <use xlink:href="./assets/sprite.svg#avatar"/>
                             </svg>
                         </button>

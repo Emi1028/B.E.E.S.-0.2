@@ -195,21 +195,17 @@ app.post('/api/CrearPerfil', requireAuth, async (req, res) => {
         return res.status(500).json({ success: false, message: 'Error en el servidor' });
     }      
 });
-app.get('/api/ObtenerNiños', requireAuth, async (req, res) => {
+app.get('/api/ObtenerNinos', requireAuth, async (req, res) => {
     const userId = req.session.userId;
     try {
-        // Obtener perfiles de niños asociados al usuario padre
         const [rows] = await pool.query(
-            'SELECT id_niño, n_nombre FROM prueba_niños WHERE id_papa = ?',
+            'SELECT * FROM prueba_niños WHERE id_papa = ?',
             [userId]
         );
-        if (rows.length === 0) {
-            return res.json({ success: true, message: 'No hay perfiles de niños asociados', niños: [] });
-        }
-        return res.json({ success: true, niños: rows });
-    }catch (err){
-        console.error('Error al obtener perfiles de niños:', err);
-        return res.status(500).json({ success: false, message: 'Error en el servidor' });
+        return res.json({success: true, niños: rows});
+    } catch (error) {
+        console.error('Error obteniendo niños:', error);
+        res.status(500).json({ error: 'Error al obtener los niños' });
     }
 });
 

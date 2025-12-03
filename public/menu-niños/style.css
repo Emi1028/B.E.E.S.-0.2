@@ -9,6 +9,8 @@
     --accent-red: #C98C9A;
     --pink:#D7A9AF;
     --accent-red-hover: #E5C6C3;
+    --pink-hover:#ffb9ed;
+    --mauve-wool-hover: #c772b2;
     --shadow-bottom: rgba(201, 140, 154, 0.5);
     
     /* Colores de gradiente */
@@ -60,7 +62,9 @@ header {
 main{
     max-width:190vh;
     margin:28px auto;
-    padding:0 20px
+    padding:0 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 .logo{
     width: 48.6px;

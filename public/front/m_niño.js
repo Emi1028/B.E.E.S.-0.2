@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const dialogRegistro = document.getElementById('Agregar-perfiles');
-    const formRegistro = document.querySelector('form[name="inicio-sesion"]');
-    if (formRegistro) {
-        formRegistro.addEventListener('submit', async (e) => {
+    const dialogPerfil = document.getElementById('Agregar-perfiles');
+    const formPerfil = document.querySelector('form[name="inicio-sesion"]');
+    if (formPerfil) {
+        formPerfil.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const n_nombre = formRegistro.querySelector('input[name="n_nombre"]').value;
+            const n_nombre   = formPerfil.querySelector('input[name="n_nombre"]').value;
             if (!n_nombre.trim()) {
                 return alert("El nombre no puede estar vacío");
             }            
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (data.success) {
                     alert('Perfil creado exitosamente');
-                    dialogRegistro.close();
+                    dialogPerfil.close();
                     location.reload(); // Recargar para actualizar la interfaz
                 } else {
                     alert(data.message || 'Error al crear perfil');
@@ -51,7 +51,7 @@ function updateUIForLoggedUser(usuario) {
                 </p>
                 <div class="relative inline-flex items-center">
                     <button id="profileBtn" class="mr-2 w-10 h-10 rounded-full overflow-hidden border-2 border-[var(--white)] hover:border-[var(--primary)] transition-all duration-200">
-                        <svg width="full" height="full" class="text-[var(--gray-medium)] hover:text-[var(--gray-light)]">
+                        <svg width="100%" height="100%" class="text-[var(--gray-medium)] hover:text-[var(--gray-light)]">
                             <use xlink:href="../assets/sprite.svg#avatar"/>
                         </svg>
                     </button>
@@ -64,7 +64,6 @@ function updateUIForLoggedUser(usuario) {
                 </div>
             </div>
         </div>`;
-        
         // Usar setTimeout para asegurar que el DOM esté actualizado
         setTimeout(() => {            
             // Funcionalidad del menú desplegable del perfil
@@ -107,29 +106,60 @@ function updateUIForLoggedUser(usuario) {
         bt.innerHTML = `
             <main>
                 <div class="sm:col-span-2 bg-[var(--blue-wool)] border-[5px] rounded-lg shadow p-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Aquí se agregarán los niños dinámicamente -->
-                        <button commandfor="Agregar-perfiles" command="show-modal" class="cursor-pointer bg-[var(--primary-shadow)] border-[5px] border-[var(--primary-shadow)] rounded-lg hover:bg-[var(--primary-shadow-hover)] hover:border-[var(--primary-shadow-hover)] py-52 text-center justify-center items-center flex flex-col">
-                            <div class="bg-black rounded-full p-2 mb-2">
-                                <svg width="40px" height="40px" class="text-[var(--gray-medium)] hover:text-[var(--gray-light)]">
+                    <div id="Contenedor-card" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <button commandfor="Agregar-perfiles" command="show-modal" class="order-last cursor-pointer bg-[var(--pink-hover)] 
+                        border-[5px] border-[var(--mauve-wool-hover)] rounded-lg hover:opacity-90 py-28 sm:py-28 md:py-28 lg:py-52 text-center 
+                        justify-center items-center flex flex-col font-bold text-[var(--mauve-wool-hover)] text-5xl" >
+                            <div class="bg-[var(--mauve-wool-hover)] rounded-full p-2 mb-2">
+                                <svg width="40px" height="40px" class="text-[var(--pink-hover)]">
                                     <use xlink:href="../assets/sprite.svg#plus-icon"/>
                                 </svg>
                             </div>
-                        Agregar Perfil <br>de un nuevo niño</button>
+                        Agregar Perfil<br>de niño</button>
                     </div>
                 </div>
             </main>`;
         // Usar setTimeout para asegurar que el DOM esté actualizado
-        setTimeout(() => {
-            const btn_ver = document.getElementById('ver-niños');
-            if (btn_ver) {
-                btn_ver.addEventListener('click', (e) => {
-                    window.location.href = 'menu-niños/';
-                });
+        setTimeout(async () => {
+            const contenedorCard = document.getElementById('Contenedor-card');
+            const childrenData = (await fetchChildren()).niños;
+            if (childrenData.length === 3) {
+                contenedorCard.innerHTML = '';
+            }
+            // Mostrar cards
+            //contenedorCard.innerHTML = '';
+            for (const niño of childrenData) {
+                const card = document.createElement('div');
+                card.className = 'bg-[var(--white)] border-[5px] rounded-lg shadow py-28 sm:py-28 md:py-28 lg:py-52 text-center justify-center items-center flex flex-col font-bold text-2xl';
+                card.innerHTML = `
+                    <div class="flex flex-col items-center">
+                        <!--<div class="bg-[var(--gradient-blue-start)] rounded-full p-4 mb-4">
+                            <svg width="60px" height="60px" class="text-[var(--black)]">
+                                <use xlink:href="../assets/sprite.svg#avatar"/>
+                            </svg>
+                        </div>-->
+                        <h2 class="font-bold mb-2 text-[var(--black)]">${niño.n_nombre}</h2>
+                        <a href="../menu-niños/?id=${niño.id_niño}" 
+                            class="inline-block bg-[var(--gradient-blue-start)] text-[var(--black)] font-bold py-2 px-4 rounded-lg hover:opacity-90">
+                            Ver Perfil
+                        </a>
+                    </div>
+                `;
+                contenedorCard.appendChild(card);
             }
         }, 0);
     }
 }
+async function fetchChildren() {
+    try {
+        const response = await fetch('/api/ObtenerNinos');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        return { success: false, niños: [] };
+    }
+}
+
 async function checkSession() {
     try {
         const response = await fetch('/api/session');
