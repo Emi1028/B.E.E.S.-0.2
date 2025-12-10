@@ -4,10 +4,8 @@ const pool = require('../db/connection');
 // Registro
 exports.registro = async (req, res) => {
     const { u_nombre, nombre, apellido_p, apellido_m, telefono, contraseña } = req.body;
-
     try {
         const apellidoCompleto = `${apellido_p} ${apellido_m}`;
-
         const [rowsNombre] = await pool.query(
             'SELECT * FROM c_papa WHERE u_nombre = ?',
             [u_nombre]
@@ -15,7 +13,6 @@ exports.registro = async (req, res) => {
         if (rowsNombre.length > 0) {
             return res.status(400).json({ success: false, message: 'El nombre de usuario ya está registrado' });
         }
-
         const [rowsTelefono] = await pool.query(
             'SELECT * FROM c_papa WHERE telefono = ?',
             [telefono]

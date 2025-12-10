@@ -1,4 +1,8 @@
 const mysql = require('mysql2/promise');
+const path = require('path');
+
+// Cargar variables de entorno desde la raíz del proyecto
+require('dotenv')
 
 const pool = mysql.createPool({
     host: process.env.MYSQL_HOST,

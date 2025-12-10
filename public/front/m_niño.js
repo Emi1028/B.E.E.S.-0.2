@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const dialogPerfil = document.getElementById('Agregar-perfiles');
-    const formPerfil = document.querySelector('form[name="inicio-sesion"]');
+    const formPerfil = document.querySelector('form[name="crearPerfil"]');
     if (formPerfil) {
         formPerfil.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.success) {
                     alert('Perfil creado exitosamente');
                     dialogPerfil.close();
-                    location.reload(); // Recargar para actualizar la interfaz
+                    checkSession(); // Recargar para actualizar la interfaz
                 } else {
                     alert(data.message || 'Error al crear perfil');
                 }
@@ -30,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    configurarEliminarPerfil();
+    configurarDropdown();
+
     checkSession();
 });
 
@@ -56,50 +59,14 @@ function updateUIForLoggedUser(usuario) {
                         </svg>
                     </button>
                     <div id="dropdown" class="hidden absolute right-0 top-full mt-2 mr-2 w-64 bg-[var(--dialog-fondo)] text-[var(--Twhite)] rounded-xl shadow-xl p-3 space-y-2 z-50">
-                        <a href="../Perfil" id="perfil" class="block px-2 py-2 rounded-lg hover:bg-[var(--gradient-blue-mid)] text-[var(--Twhite)]">Perfil</a>
-                        <a href="../menu-niños/" class="block px-2 py-2 rounded-lg hover:bg-[var(--gradient-blue-mid)] text-[var(--Twhite)]">Niños</a>
+                        <a href="../Perfil/" id="perfil" class="block px-2 py-2 rounded-lg hover:bg-[var(--gradient-blue-mid)] text-[var(--Twhite)]">Perfil</a>
+                        <a href="../menu-niños/" id="btn-ver-niños" class="block px-2 py-2 rounded-lg hover:bg-[var(--gradient-blue-mid)] text-[var(--Twhite)]">Niños</a>
                         <hr class="border-[var(--one-esmeralda)]">
                         <a href="#" id="logoutLink" class="block px-2 py-2 rounded-lg hover:bg-[var(--gradient-blue-mid)] text-[var(--Twhite)]">Cerrar sesión</a>
                     </div>
                 </div>
             </div>
         </div>`;
-        // Usar setTimeout para asegurar que el DOM esté actualizado
-        setTimeout(() => {            
-            // Funcionalidad del menú desplegable del perfil
-            const profileBtn = document.getElementById('profileBtn');
-            const dropdown = document.getElementById('dropdown');
-            const logoutLink = document.getElementById('logoutLink');
-            
-            if (profileBtn && dropdown) {
-                // Toggle del dropdown al hacer click en el botón de perfil
-                profileBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    dropdown.classList.toggle('hidden');
-                });
-                
-                // Cerrar el dropdown al hacer click fuera
-                document.addEventListener('click', (e) => {
-                    if (!dropdown.classList.contains('hidden') && !dropdown.contains(e.target)) {
-                        dropdown.classList.add('hidden');
-                    }
-                });
-            }
-            // Evento del boton ver niños en el menú desplegable
-            const btn_ver = document.getElementById('btn-ver-niños');
-            if (btn_ver) {
-                btn_ver.addEventListener('click', (e) => {
-                    window.location.href = 'menu-niños/';
-                });
-            }
-            // Evento de logout en el menú desplegable
-            if (logoutLink) {
-                logoutLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    logout();
-                });
-            }
-        }, 0);
     }
     //boton ver niños
     if (bt) {
@@ -119,47 +86,131 @@ function updateUIForLoggedUser(usuario) {
                     </div>
                 </div>
             </main>`;
-        // Usar setTimeout para asegurar que el DOM esté actualizado
-        setTimeout(async () => {
-            const contenedorCard = document.getElementById('Contenedor-card');
-            const childrenData = (await fetchChildren()).niños;
-            if (childrenData.length === 3) {
-                contenedorCard.innerHTML = '';
-            }
-            // Mostrar cards
-            //contenedorCard.innerHTML = '';
-            for (const niño of childrenData) {
-                const card = document.createElement('div');
-                card.className = 'bg-[var(--white)] border-[5px] rounded-lg shadow py-28 sm:py-28 md:py-28 lg:py-52 text-center justify-center items-center flex flex-col font-bold text-2xl';
-                card.innerHTML = `
-                    <div class="flex flex-col items-center">
-                        <!--<div class="bg-[var(--gradient-blue-start)] rounded-full p-4 mb-4">
-                            <svg width="60px" height="60px" class="text-[var(--black)]">
-                                <use xlink:href="../assets/sprite.svg#avatar"/>
-                            </svg>
-                        </div>-->
-                        <h2 class="font-bold mb-2 text-[var(--black)]">${niño.n_nombre}</h2>
-                        <a href="../menu-niños/?id=${niño.id_niño}" 
-                            class="inline-block bg-[var(--gradient-blue-start)] text-[var(--black)] font-bold py-2 px-4 rounded-lg hover:opacity-90">
-                            Ver Perfil
-                        </a>
-                    </div>
-                `;
-                contenedorCard.appendChild(card);
-            }
-        }, 0);
+        actializarPerfilesNiños();
     }
 }
 async function fetchChildren() {
     try {
-        const response = await fetch('/api/ObtenerNinos');
+        const response = await fetch('http://localhost:3000/api/ObtenerNinos', {
+            credentials: 'include'
+        });
         const data = await response.json();
         return data;
     } catch (error) {
         return { success: false, niños: [] };
     }
 }
+async function actializarPerfilesNiños() {
+    const contenedorCard = document.getElementById('Contenedor-card');
+    if (!contenedorCard) return;
 
+    // Obtener niños del backend
+    const childrenData = (await fetchChildren()).niños;
+    console.log('Datos de niños:', childrenData);
+    // 1. Limpiar TODO el contenedor, incluyendo el botón
+    contenedorCard.innerHTML = "";
+
+    // 2. Dibujar primero todas las cards de los niños
+    for (const niño of childrenData) {
+        console.log('Niño individual:', niño);
+        const card = document.createElement('div');
+        card.className = 'bg-[var(--white)] border-[5px] rounded-lg shadow py-28 sm:py-28 md:py-28 lg:py-52 text-center justify-center items-center flex flex-col font-bold text-2xl child-card';
+        
+        card.innerHTML = `
+            <div class="flex flex-col items-center">
+                <h2 class="font-bold mb-2 text-[var(--black)]">${niño.n_nombre}</h2>
+                <button class="load eliminar-perfil" data-id="${niño.id_niño}">Eliminar Perfil</button>
+            </div>
+        `;
+
+        contenedorCard.appendChild(card);
+    }
+
+    // 3. Si todavía no hay 3 perfiles → agregar botón de agregar perfil
+    if (childrenData.length < 3) {
+        const addButton = document.createElement('button');
+        addButton.setAttribute("commandfor", "Agregar-perfiles");
+        addButton.setAttribute("command", "show-modal");
+
+        addButton.className = `
+            cursor-pointer bg-[var(--pink-hover)] border-[5px] border-[var(--mauve-wool-hover)]
+            rounded-lg hover:opacity-90 py-28 sm:py-28 md:py-28 lg:py-52 text-center 
+            justify-center items-center flex flex-col font-bold text-[var(--mauve-wool-hover)] text-5xl
+        `;
+
+        addButton.innerHTML = `
+            <div class="bg-[var(--mauve-wool-hover)] rounded-full p-2 mb-2">
+                <svg width="40px" height="40px" class="text-[var(--pink-hover)]">
+                    <use xlink:href="../assets/sprite.svg#plus-icon"/>
+                </svg>
+            </div>
+            Agregar Perfil<br>de niño
+        `;
+
+        contenedorCard.appendChild(addButton);
+    }
+}
+
+
+function configurarEliminarPerfil() {
+  document.addEventListener('click', async (e) => {
+    if (e.target.classList.contains('eliminar-perfil')) {
+      const id = e.target.getAttribute('data-id');
+      console.log('ID a eliminar:', id);
+      
+      if (!id || id === 'undefined') {
+        alert('Error: ID del perfil no válido');
+        return;
+      }
+      
+      try {
+        const res = await fetch(`http://localhost:3000/api/EliminarPerfil/${id}`, { 
+          method: 'DELETE',
+          credentials: 'include'
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          alert(data.message);
+          checkSession();
+        } else {
+          alert(data.message);
+        }
+
+      } catch (error) {
+        console.error(error);
+        alert('Error al eliminar perfil');
+      }
+    }
+  });
+}
+function configurarDropdown() {
+  document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('dropdown');
+    const profileBtn = document.getElementById('profileBtn');
+
+    if (!dropdown || !profileBtn) return;
+
+    // Toggle dropdown al hacer click en el perfil
+    if (e.target === profileBtn || profileBtn.contains(e.target)) {
+      e.stopPropagation();
+      dropdown.classList.toggle('hidden');
+      return;
+    }
+
+    // Click afuera → cerrar
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.add('hidden');
+    }
+  });
+  // Logout delegando evento
+  document.addEventListener('click', (e) => {
+    if (e.target.id === 'logoutLink') {
+      e.preventDefault();
+      logout();
+    }
+  });
+}
 async function checkSession() {
     try {
         const response = await fetch('/api/session');
