@@ -92,9 +92,16 @@ exports.logout = (req, res) => {
 
 // Verificar sesión
 exports.session = (req, res) => {
-    res.json({
-        success: true,
-        autenticado: true,
-        usuario: req.session.usuario
-    });
+    if (req.session && req.session.userId) {
+        res.json({
+            success: true,
+            autenticado: true,
+            usuario: req.session.usuario
+        });
+    } else {
+        res.json({
+            success: true,
+            autenticado: false
+        });
+    }
 };

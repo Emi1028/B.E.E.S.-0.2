@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     configurarEliminarPerfil();
     configurarDropdown();
-
     checkSession();
 });
 
@@ -191,7 +190,7 @@ function configurarDropdown() {
 
     if (!dropdown || !profileBtn) return;
 
-    // Toggle dropdown al hacer click en el perfil
+    // Toggle dropdown al hacer click en el boton perfil
     if (e.target === profileBtn || profileBtn.contains(e.target)) {
       e.stopPropagation();
       dropdown.classList.toggle('hidden');
