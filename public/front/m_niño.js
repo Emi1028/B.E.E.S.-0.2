@@ -80,13 +80,20 @@ async function actializarPerfilesNiños() {
     if (!contenedorCard) return;
 
     // Obtener niños del backend
-    const childrenData = (await fetchChildren()).ninos;
-    console.log('Datos de niños:', childrenData);
-    // 1. Limpiar el contenedor si ya hay 3 cards
-    if (childrenData.length === 3) {
-        contenedorCard.innerHTML = "";
+    const response = await fetchChildren();
+    console.log('Datos de niños:', response);
+    const childrenData = response.niños || [];
+    
+    if (!childrenData || childrenData.length === 0) {
+        console.log('No hay niños registrados');
+        return;
     }
-    // 2. Dibujar primero todas las cards de los niños
+    
+    // Limpiar solo las cards de niños existentes, mantener el botón agregar
+    const existingCards = contenedorCard.querySelectorAll('.child-card');
+    existingCards.forEach(card => card.remove());
+    
+    // Dibujar todas las cards de los niños
     for (const niño of childrenData) {
         console.log('Niño individual:', niño);
         const card = document.createElement('div');
@@ -102,7 +109,13 @@ async function actializarPerfilesNiños() {
                 Ver Perfil
             </a>
         `;
-        contenedorCard.appendChild(card);
+        // Insertar antes del botón "Agregar Perfil"
+        const addButton = contenedorCard.querySelector('button[commandfor="Agregar-perfiles"]');
+        if (addButton) {
+            contenedorCard.insertBefore(card, addButton);
+        } else {
+            contenedorCard.appendChild(card);
+        }
     }
 }
 
