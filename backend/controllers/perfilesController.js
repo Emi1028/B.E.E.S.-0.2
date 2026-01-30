@@ -6,7 +6,7 @@ exports.crearPerfil = async (req, res) => {
 
     try {
         const [result] = await pool.query(
-            'INSERT INTO prueba_niños (n_nombre, id_papa) VALUES (?, ?)',
+            'INSERT INTO nino (n_nombre, id_papa) VALUES (?, ?)',
             [n_nombre, userId]
         );
 
@@ -27,7 +27,7 @@ exports.obtenerPerfiles = async (req, res) => {
 
     try {
         const [rows] = await pool.query(
-            'SELECT * FROM prueba_niños WHERE id_papa = ?',
+            'SELECT * FROM ninos WHERE id_papa = ?',
             [userId]
         );
 
@@ -43,7 +43,7 @@ exports.eliminarPerfil = async (req, res) => {
     try{
         const perfilId = req.params.id;
         const [result] = await pool.query(
-            'DELETE FROM prueba_niños WHERE id_niño = ?',
+            'DELETE FROM nino WHERE id_niño = ?',
             [perfilId]
         );
         if (result.affectedRows === 0) {
