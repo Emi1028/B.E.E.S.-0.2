@@ -82,7 +82,7 @@ async function actializarPerfilesNiños() {
     // Obtener niños del backend
     const childrenData = (await fetchChildren()).ninos;
     console.log('Datos de niños:', childrenData);
-    if (!childrenData || childrenData.length === 0) {
+    if (!childrenData) {
         contenedorCard.innerHTML = '<p class="text-center w-full col-span-3">Huvo un error al cargar los perfiles de niños.</p>';
         return;
     }
