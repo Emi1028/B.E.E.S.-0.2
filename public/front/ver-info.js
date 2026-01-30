@@ -267,7 +267,7 @@ async function cargarDatosNiñoYActualizarUI(idNiño) {
     mainElement.innerHTML = `
         <main>
             <div class="text-center grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-2">
-                <div class="grid grid-cols-1 items-center md:col-span-1 bg-[var(--blue-wool)] border-[5px] rounded-lg shadow p-4 gap-2">
+                <div class="h-80 grid grid-cols-1 items-center md:col-span-1 bg-[var(--blue-wool)] border-[5px] rounded-lg shadow p-4 gap-2">
                     <a href="../../menu-niños/" class="bg-[var(--accent-red)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--accent-red-hover)] transition-colors duration-200">volver</a>
                     <button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="estadisticas">Estadísticas</button>
                     <button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="informacion">Información</button>

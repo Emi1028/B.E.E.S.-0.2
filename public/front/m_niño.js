@@ -92,19 +92,24 @@ async function actializarPerfilesNiños() {
     for (const niño of childrenData) {
         console.log('Niño individual:', niño);
         const card = document.createElement('div');
-        card.className = 'bg-[var(--white)] border-[5px] rounded-lg shadow py-28 sm:py-28 md:py-28 lg:py-52 text-center justify-center items-center flex flex-col font-bold text-2xl child-card';
+        card.className = 'bg-[var(--white)] border-[5px] rounded-lg shadow py-24 sm:py-24 md:py-24 lg:py-24 text-center justify-center items-center flex flex-col font-bold text-2xl child-card';
 
         card.innerHTML = `
+            <div class="w-24 h-24 mb-2 rounded-full overflow-hidden border-2 border-[var(--gray-light)]">
+                <svg width="100%" height="100%" class="text-[var(--gray-medium)] hover:text-[var(--gray-light)]">
+                    <use xlink:href="../assets/sprite.svg#avatar"/>
+                </svg>
+            </div>
             <div class="flex flex-col items-center">
                 <h2 class="font-bold mb-2 text-[var(--black)]">${niño.n_nombre}</h2>
             </div>
             <div class="flex flex-col gap-4 mt-4">
-                <button class="load eliminar-perfil bg-[var(--accent-red)] hover:bg-[var(--accent-red-hover)] transition-all duration-300 ease-in-out hover:-translate-y-1 
-                    text-[var(--Twhite)] font-bold py-1 px-4 sm:px-6 md:px-8 mt-0 rounded-full justify-center items-center font-sans pb-3" data-id="${niño.id_niño}">Eliminar Perfil</button>
                 <a href="Ver_niño/?id=${niño.id_niño}" class="bg-[var(--primary)] hover:bg-[var(--gradient-blue-mid)] transition-all duration-300 ease-in-out hover:-translate-y-1 
                     text-[var(--Twhite)] font-bold py-1 px-4 sm:px-6 md:px-8 mt-0 rounded-full justify-center items-center font-sans pb-3">
                     Ver Perfil
                 </a>
+                <button class="load eliminar-perfil bg-[var(--accent-red)] hover:bg-[var(--accent-red-hover)] transition-all duration-300 ease-in-out hover:-translate-y-1 
+                    text-[var(--Twhite)] font-bold py-1 px-4 sm:px-6 md:px-8 mt-0 rounded-full justify-center items-center font-sans pb-3" data-id="${niño.id_niño}">Eliminar Perfil</button>
             </div>
         `;
         // Insertar antes del botón "Agregar Perfil"
