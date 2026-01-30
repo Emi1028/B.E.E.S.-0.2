@@ -66,13 +66,13 @@ function updateUIForLoggedUser(usuario) {
 }
 async function fetchChildren() {
     try {
-        const response = await fetch('/api/ObtenerNinos', {
+        const response = await fetch('/api/ObtenerNiños', {
             credentials: 'include'
         });
         const data = await response.json();
         return data;
     } catch (error) {
-        return { success: false, ninos: [] };
+        return { success: false, niños: [] };
     }
 }
 async function actializarPerfilesNiños() {
