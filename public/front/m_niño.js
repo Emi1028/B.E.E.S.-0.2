@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return alert("El nombre no puede estar vacío");
             }            
             try {
+                console.log('Enviando datos para crear perfil:', { n_nombre });
                 const response = await fetch('http://localhost:3000/api/CrearPerfil', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -71,7 +72,7 @@ async function fetchChildren() {
         const data = await response.json();
         return data;
     } catch (error) {
-        return { success: false, niños: [] };
+        return { success: false, ninos: [] };
     }
 }
 async function actializarPerfilesNiños() {
@@ -79,7 +80,7 @@ async function actializarPerfilesNiños() {
     if (!contenedorCard) return;
 
     // Obtener niños del backend
-    const childrenData = (await fetchChildren()).niños;
+    const childrenData = (await fetchChildren()).ninos;
     console.log('Datos de niños:', childrenData);
     if (!childrenData || childrenData.length === 3) {
         contenedorCard.innerHTML = "";
