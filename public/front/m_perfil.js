@@ -13,12 +13,10 @@ function updateUIForLoggedUser(usuario) {
         bt.innerHTML = `
             <main class="font-bold text-lg">
                 <div class="text-center grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-2">
-                    <div class="grid grid-cols-1 items-center md:col-span-1 bg-[var(--blue-wool)] border-[5px] rounded-lg shadow p-4">
-                        <spam class="block w-auto text-left pb-3">
-                            <a href="../menu-niños/" id="ver-niños" class="bg-[var(--primary)] text-white px-4 py-2 rounded-lg hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200">
-                                Ver Niños
-                            </a>
-                        </spam>
+                    <div class="grid grid-cols-1 items-center md:col-span-1 bg-[var(--blue-wool)] border-[5px] rounded-lg shadow p-4"> <spam class="block w-auto text-left pb-3">
+                        <a href="../menu-niños/" id="ver-niños" class="bg-[var(--primary)] text-white px-4 py-2 rounded-lg hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200">
+                            Ver Niños
+                        </a>
                         <div class="col-span-1 bg-white">hola</div>
                         <div class="bg-white">hola</div>
                         <div class="bg-white">hola</div>

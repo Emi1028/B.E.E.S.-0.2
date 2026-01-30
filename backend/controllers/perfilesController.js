@@ -38,6 +38,29 @@ exports.obtenerPerfiles = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error en el servidor' });
     }
 };
+
+// Obtener un niño específico por ID
+exports.obtenerNinoPorId = async (req, res) => {
+    const userId = req.session.userId;
+    const niñoId = req.params.id;
+
+    try {
+        const [rows] = await pool.query(
+            'SELECT * FROM prueba_niños WHERE id_niño = ? AND id_papa = ?',
+            [niñoId, userId]
+        );
+
+        if (rows.length === 0) {
+            return res.json({ success: false, message: 'Niño no encontrado' });
+        }
+
+        res.json({ success: true, niño: rows[0] });
+
+    } catch (error) {
+        console.error('Error obteniendo niño:', error);
+        res.status(500).json({ success: false, message: 'Error en el servidor' });
+    }
+};
 // Eliminar un perfil de niño por ID
 exports.eliminarPerfil = async (req, res) => {
     try{

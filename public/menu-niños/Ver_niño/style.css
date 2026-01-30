@@ -149,3 +149,23 @@ dialog form[method="dialog"] button:hover {
     transform: rotate(360deg) scale(1.1);
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
+#nuevo-objetivo {
+    padding: 10px 14px;
+    margin-right: 10px;
+    border: 2px solid transparent;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    background: var(--white);
+    color: var(--gray-dark);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+#nuevo-objetivo::placeholder {
+    color: var(--gray-light);
+}
+#nuevo-objetivo:focus {
+    outline: none;
+    border-color: var(--one-esmeralda);
+    transform: translateY(-2px);
+}

@@ -37,6 +37,7 @@ app.use(session({
 // Rutas
 app.use('/api', require('./routes/authRoutes'));
 app.use('/api', require('./routes/perfilRoutes'));
+app.use('/api', require('./routes/objetivosRoutes'));
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);

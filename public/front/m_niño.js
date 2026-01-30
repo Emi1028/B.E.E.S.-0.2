@@ -97,12 +97,15 @@ async function actializarPerfilesNiños() {
         card.innerHTML = `
             <div class="flex flex-col items-center">
                 <h2 class="font-bold mb-2 text-[var(--black)]">${niño.n_nombre}</h2>
-                <button class="load eliminar-perfil" data-id="${niño.id_niño}">Eliminar Perfil</button>
             </div>
-            <a href="Ver_niño/" id="ver-niños" class="bg-[var(--accent-red)] hover:bg-[var(--accent-red-hover)] transition-all duration-300 ease-in-out hover:-translate-y-1 
-                text-[var(--Twhite)] font-bold py-1 px-4 sm:px-6 md:px-8 mt-0 rounded-full justify-center items-center font-sans text-xl sm:text-2xl md:text-3xl lg:text-4xl pb-3">
-                Ver Perfil
-            </a>
+            <div class="flex flex-col gap-4 mt-4">
+                <button class="load eliminar-perfil bg-[var(--accent-red)] hover:bg-[var(--accent-red-hover)] transition-all duration-300 ease-in-out hover:-translate-y-1 
+                    text-[var(--Twhite)] font-bold py-1 px-4 sm:px-6 md:px-8 mt-0 rounded-full justify-center items-center font-sans pb-3" data-id="${niño.id_niño}">Eliminar Perfil</button>
+                <a href="Ver_niño/?id=${niño.id_niño}" class="bg-[var(--primary)] hover:bg-[var(--gradient-blue-mid)] transition-all duration-300 ease-in-out hover:-translate-y-1 
+                    text-[var(--Twhite)] font-bold py-1 px-4 sm:px-6 md:px-8 mt-0 rounded-full justify-center items-center font-sans pb-3">
+                    Ver Perfil
+                </a>
+            </div>
         `;
         // Insertar antes del botón "Agregar Perfil"
         const addButton = contenedorCard.querySelector('button[commandfor="Agregar-perfiles"]');
