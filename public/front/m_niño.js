@@ -84,11 +84,6 @@ async function actializarPerfilesNiños() {
     console.log('Datos de niños:', response);
     const childrenData = response.niños || [];
     
-    if (!childrenData || childrenData.length === 0) {
-        console.log('No hay niños registrados');
-        return;
-    }
-    
     // Limpiar solo las cards de niños existentes, mantener el botón agregar
     const existingCards = contenedorCard.querySelectorAll('.child-card');
     existingCards.forEach(card => card.remove());
@@ -115,6 +110,16 @@ async function actializarPerfilesNiños() {
             contenedorCard.insertBefore(card, addButton);
         } else {
             contenedorCard.appendChild(card);
+        }
+    }
+    
+    // Ocultar botón de agregar si ya hay 3 perfiles
+    const addButton = contenedorCard.querySelector('button[commandfor="Agregar-perfiles"]');
+    if (addButton) {
+        if (childrenData.length >= 3) {
+            addButton.style.display = 'none';
+        } else {
+            addButton.style.display = 'flex';
         }
     }
 }
