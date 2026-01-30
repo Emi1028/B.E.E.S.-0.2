@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }            
             try {
                 console.log('Enviando datos para crear perfil:', { n_nombre });
-                const response = await fetch('http://localhost:3000/api/CrearPerfil', {
+                const response = await fetch('/api/CrearPerfil', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
@@ -66,7 +66,7 @@ function updateUIForLoggedUser(usuario) {
 }
 async function fetchChildren() {
     try {
-        const response = await fetch('http://localhost:3000/api/ObtenerNinos', {
+        const response = await fetch('/api/ObtenerNinos', {
             credentials: 'include'
         });
         const data = await response.json();
@@ -118,7 +118,7 @@ function configurarEliminarPerfil() {
       }
       
       try {
-        const res = await fetch(`http://localhost:3000/api/EliminarPerfil/${id}`, { 
+        const res = await fetch(`/api/EliminarPerfil/${id}`, { 
           method: 'DELETE',
           credentials: 'include'
         });
