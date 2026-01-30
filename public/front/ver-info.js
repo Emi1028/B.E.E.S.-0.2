@@ -1,42 +1,46 @@
+document.addEventListener('DOMContentLoaded', () => {
+    checkSession();
+    cargarEstadisticasJuegos();
+});
+
 const ctx = document.getElementById('myChart').getContext('2d');
 let myChart;
 
-// Función para cargar datos de panes más vendidos
-async function cargarEstadisticasPedidos() {
+// Función para cargar datos de tiempo de juegos
+async function cargarEstadisticasJuegos() {
     try {
-        const response = await fetch('/api/estadisticas-pedidos');
+        const response = await fetch('/api/estadisticas-juegos');
         const datos = await response.json();
         
-        // Extraer nombres y cantidades
-        const nombresPanes = datos.map(item => item.nombre_pan);
-        const cantidadesVendidas = datos.map(item => parseInt(item.total_vendido) || 0);
-        const ingresosGenerados = datos.map(item => parseFloat(item.total_ingresos) || 0);
+        // Extraer nombres de juegos y tiempos
+        const nombresJuegos = datos.map(item => item.nombre_juego);
+        const tiemposJuegos = datos.map(item => parseInt(item.tiempo_jugado) || 0);
         
-        // Crear colores dinámicos para cada pan
+        // Colores de la paleta "Wrapped in Wool"
         const coloresFondo = [
-            'rgba(255, 99, 132, 0.6)',
-            'rgba(54, 162, 235, 0.6)',
-            'rgba(255, 206, 86, 0.6)',
-            'rgba(75, 192, 192, 0.6)',
-            'rgba(153, 102, 255, 0.6)',
-            'rgba(255, 159, 64, 0.6)',
-            'rgba(199, 199, 199, 0.6)',
-            'rgba(83, 102, 255, 0.6)',
-            'rgba(255, 99, 255, 0.6)',
-            'rgba(99, 255, 132, 0.6)'
+            'rgba(79, 177, 157, 0.7)',    // --teal-wool
+            'rgba(154, 197, 229, 0.7)',   // --blue-wool
+            'rgba(237, 206, 122, 0.7)',   // --yellow-wool
+            'rgba(201, 140, 154, 0.7)',   // --mauve-wool
+            'rgba(229, 198, 195, 0.7)',   // --pink-wool
+            'rgba(215, 169, 175, 0.7)',   // --pink
+            'rgba(117, 187, 193, 0.7)',   // --gradient-blue-mid
+            'rgba(79, 177, 157, 0.5)',    // --teal-wool (más claro)
+            'rgba(154, 197, 229, 0.5)',   // --blue-wool (más claro)
+            'rgba(237, 206, 122, 0.5)'    // --yellow-wool (más claro)
         ];
         
         const coloresBorde = [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)',
-            'rgba(199, 199, 199, 1)',
-            'rgba(83, 102, 255, 1)',
-            'rgba(255, 99, 255, 1)',
-            'rgba(99, 255, 132, 1)'
+            'rgba(79, 177, 157, 1)',      // --teal-wool
+            'rgba(154, 197, 229, 1)',     // --blue-wool
+            'rgba(237, 206, 122, 1)',     // --yellow-wool
+            'rgba(201, 140, 154, 1)',     // --mauve-wool
+            'rgba(229, 198, 195, 1)',     // --pink-wool
+            'rgba(215, 169, 175, 1)',     // --pink
+            'rgba(117, 187, 193, 1)',     // --gradient-blue-mid
+            'rgba(79, 177, 157, 1)',      // --teal-wool
+            'rgba(154, 197, 229, 1)',     // --blue-wool
+            'rgba(237, 206, 122, 1)'      // --yellow-wool
         ];
         
         // Crear o actualizar el gráfico
@@ -47,10 +51,10 @@ async function cargarEstadisticasPedidos() {
         myChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: nombresPanes,
+                labels: nombresJuegos,
                 datasets: [{
-                    label: 'Unidades vendidas',
-                    data: cantidadesVendidas,
+                    label: 'Tiempo jugado (minutos)',
+                    data: tiemposJuegos,
                     backgroundColor: coloresFondo,
                     borderColor: coloresBorde,
                     borderWidth: 2
@@ -71,7 +75,7 @@ async function cargarEstadisticasPedidos() {
                     },
                     title: {
                         display: true,
-                        text: 'Panes Más Vendidos',
+                        text: 'Tiempo de Juego por Actividad',
                         font: {
                             size: 18,
                             weight: 'bold'
@@ -84,7 +88,7 @@ async function cargarEstadisticasPedidos() {
                                 let value = context.parsed || 0;
                                 let total = context.dataset.data.reduce((a, b) => a + b, 0);
                                 let percentage = ((value / total) * 100).toFixed(1);
-                                return label + ': ' + value + ' unidades (' + percentage + '%)';
+                                return label + ': ' + value + ' minutos (' + percentage + '%)';
                             }
                         }
                     }
@@ -93,8 +97,44 @@ async function cargarEstadisticasPedidos() {
         });
         
     } catch (error) {
-        console.error('Error al cargar estadísticas:', error);
+        console.error('Error al cargar estadísticas de juegos:', error);
     }
 }
 // Cargar datos al iniciar
-cargarEstadisticasPedidos();
+cargarEstadisticasJuegos();
+
+function updateUIForLoggedUser(usuario) {
+    // Actualizar navbar usando DOM_nav.js
+    if (window.renderNavbar) {
+        window.renderNavbar(usuario);
+    }
+    
+    const bt = document.getElementById('main');
+    //boton ver niños
+    if (bt) {
+        bt.innerHTML = `
+            <main>
+                <section class="mb-12 bg-[var(--white)] rounded-2xl shadow-xl p-8 w-full max-w-4xl ml-8 border-2 border-[var(--black)]">
+                    <h3 class="text-3xl font-bold text-[var(--teal-wool)] mb-6 text-center">Estadísticas de Tiempo de Juego</h3>
+                    <p class="text-center text-[var(--gray-medium)] mb-8">Visualiza el tiempo dedicado a cada actividad lúdica</p>
+                    <div class="bg-gradient-to-br from-[var(--blue-wool)] to-[var(--pink-wool)] rounded-xl p-6 shadow-[0_4px_10px_rgba(0,0,0,0.3)]">
+                        <canvas id="myChart" class="max-w-full"></canvas>
+                    </div>
+                </section>
+            </main>`;
+        actializarPerfilesNiños();
+    }
+}
+async function checkSession() {
+    try {
+        const response = await fetch('/api/session');
+        const data = await response.json();
+        
+        if (data.autenticado) {
+            // Usuario autenticado - actualizar interfaz
+            updateUIForLoggedUser(data.usuario);
+        }
+    } catch (error) {
+        console.error('Error verificando sesión:', error);
+    }
+}

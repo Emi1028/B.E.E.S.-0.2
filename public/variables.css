@@ -1,0 +1,37 @@
+:root{
+    /* Paleta "Wrapped in Wool" */
+    --primary: #4FB19D;
+    --primary-shadow: #4FB19D80;
+    --primary-shadow-hover: #4fb19d57;
+    --logo-color: #EDCE7A;
+    
+    /* Colores de acento */
+    --accent-red: #C98C9A;
+    --pink: #D7A9AF;
+    --accent-red-hover: #E5C6C3;
+    --pink-hover: #ffb9ed;
+    --mauve-wool-hover: #c772b2;
+    --shadow-bottom: rgba(201, 140, 154, 0.5);
+    
+    /* Colores de gradiente */
+    --esmeralda: #4FB19D;
+    --one-esmeralda: #4FB19D;
+    --gradient-blue-mid: #75BBC1;
+    --dialog-fondo: #9AC5E5;
+    
+    /* Colores neutros */
+    --black: #000000;
+    --border-img: #000000;
+    --white: #ffffff;
+    --Twhite: #ffffff;
+    --gray-light: #aaa;
+    --gray-medium: #2d343a;
+    --gray-dark: #2d2d2d;
+    
+    /* Colores adicionales de la paleta */
+    --blue-wool: #9AC5E5;
+    --teal-wool: #4FB19D;
+    --yellow-wool: #EDCE7A;
+    --mauve-wool: #C98C9A;
+    --pink-wool: #E5C6C3;
+}

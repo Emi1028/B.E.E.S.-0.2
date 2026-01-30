@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
+        <link rel="stylesheet" href="../../variables.css">
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="" type="image/">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Niño<!--seleccionado --></title>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <title>web B.E.E.S</title>
     </head>
     <body>
         <header id="nav">
             <!-- Logo de Swarmp-->
-            <a href="../index.html" class="flex pl-0 py-3 cursor-pointer hover:opacity-80">
-                <img src="../img/logo2.png" alt="logo de Swarmp" class="logo">
+            <a href="../../index.html" class="flex pl-0 py-3 cursor-pointer hover:opacity-80">
+                <img src="../../img/logo2.png" alt="logo de Swarmp" class="logo">
                 <p class="hidden sm:block text-[var(--logo-color)] text-3xl font-bold">Swarmp</p> 
             </a>
             <div class="flex items-stretch">
@@ -17,7 +21,7 @@
             </div>
         </header>
         <div id="main">
-            <main class="flex justify-center items-center mx-auto bg-[var(--gradient-blue-mid)] font-['Segoe_UI',sans-serif]">
+            <main class="flex justify-center items-center mx-auto bg-[var(--gradient-blue-mid)] font-['Segoe_UI',sans-serif] p-8">
                 <div class="w-[400px] max-w-[90%] h-[17rem] text-center text-[var(--white)]
                             border-2 border-[var(--black)] rounded-[10px] p-[30px]
                             bg-[var(--blue-wool)] shadow-[0_4px_10px_rgba(0,0,0,0.4)]">
@@ -37,4 +41,6 @@
             </main>
         </div>
     </body>
+    <script src="../../front/DOM_nav.js"></script>
+    <script src="../../front/ver-info.js"></script>
 </html>
