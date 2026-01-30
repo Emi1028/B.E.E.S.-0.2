@@ -66,7 +66,7 @@ function updateUIForLoggedUser(usuario) {
 }
 async function fetchChildren() {
     try {
-        const response = await fetch('/api/ObtenerNiños', {
+        const response = await fetch('/api/ObtenerNinos', {
             credentials: 'include'
         });
         const data = await response.json();

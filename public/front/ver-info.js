@@ -114,6 +114,7 @@ function updateUIForLoggedUser(usuario) {
     if (bt) {
         bt.innerHTML = `
             <main>
+                
                 <section class="mb-12 bg-[var(--white)] rounded-2xl shadow-xl p-8 w-full max-w-4xl ml-8 border-2 border-[var(--black)]">
                     <h3 class="text-3xl font-bold text-[var(--teal-wool)] mb-6 text-center">Estadísticas de Tiempo de Juego</h3>
                     <p class="text-center text-[var(--gray-medium)] mb-8">Visualiza el tiempo dedicado a cada actividad lúdica</p>
