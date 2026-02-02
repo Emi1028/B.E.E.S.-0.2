@@ -70,14 +70,18 @@ async function cargarObjetivos(idNiño) {
         return;
     }
     contenedor.innerHTML = data.objetivos.map(obj => `
-        <div class="bg-white p-4 rounded-lg mb-3 flex justify-between items-center shadow">
-            <div class="flex items-center ailgn-center gap-4">
-                <p class="text-lg font-semibold text-gray-800">${obj.texto_objetivo}</p>
+        <div class="bg-white p-4 rounded-lg mb-3 flex justify-between items-center shadow ${obj.completado ? 'border-2 border-green-500 bg-green-50' : ''}">
+            <div class="flex items-center align-center gap-4">
+                ${obj.completado ? '<span class="text-2xl">✅</span>' : ''}
+                <p class="text-lg font-semibold ${obj.completado ? 'text-green-700 line-through' : 'text-gray-800'}">${obj.texto_objetivo}</p>
                 <p class="text-sm text-gray-500">Creado: ${new Date(obj.fecha_creacion).toLocaleDateString()}</p>
+                ${obj.completado ? '<span class="text-xs text-green-600 font-bold">COMPLETADO</span>' : ''}
             </div>
-            <button class="eliminar-objetivo bg-[var(--accent-red)] hover:bg-[var(--accent-red-hover)] text-white px-4 py-2 rounded-full transition-colors duration-200" data-id="${obj.id_objetivo}">
-                Eliminar
-            </button>
+            ${!obj.completado ? `
+                <button class="eliminar-objetivo bg-[var(--accent-red)] hover:bg-[var(--accent-red-hover)] text-white px-4 py-2 rounded-full transition-colors duration-200" data-id="${obj.id_objetivo}">
+                    Eliminar
+                </button>
+            ` : '<span class="text-gray-400 text-sm italic">No se puede eliminar</span>'}
         </div>
     `).join('');
     
@@ -91,26 +95,13 @@ async function cargarObjetivos(idNiño) {
             method: 'DELETE'
         });
         
-        result?.success ? cargarObjetivos(idNiño) : alert('Error al eliminar objetivo');
+        if(result?.success) {
+            cargarObjetivos(idNiño);
+        } else {
+            alert(result?.message || 'Error al eliminar objetivo');
+        }
     };
 }
-// Configuración de colores para el gráfico
-const COLORES_GRAFICO = {
-    fondo: [
-        'rgba(79, 177, 157, 0.7)', 'rgba(154, 197, 229, 0.7)', 'rgba(237, 206, 122, 0.7)',
-        'rgba(201, 140, 154, 0.7)', 'rgba(229, 198, 195, 0.7)', 'rgba(215, 169, 175, 0.7)',
-        'rgba(117, 187, 193, 0.7)', 'rgba(79, 177, 157, 0.5)', 'rgba(154, 197, 229, 0.5)',
-        'rgba(237, 206, 122, 0.5)'
-    ],
-    borde: [
-        'rgba(79, 177, 157, 1)', 'rgba(154, 197, 229, 1)', 'rgba(237, 206, 122, 1)',
-        'rgba(201, 140, 154, 1)', 'rgba(229, 198, 195, 1)', 'rgba(215, 169, 175, 1)',
-        'rgba(117, 187, 193, 1)', 'rgba(79, 177, 157, 1)', 'rgba(154, 197, 229, 1)',
-        'rgba(237, 206, 122, 1)'
-    ]
-};
-
-let myChart;
 
 // Obtener ID del niño desde la URL
 const obtenerIdNiñoDeURL = () => new URLSearchParams(window.location.search).get('id');
@@ -128,58 +119,6 @@ async function fetchConValidacion(url, opciones = {}) {
         console.error(`Error en petición a ${url}:`, error);
         return null;
     }
-}
-
-// Función para cargar datos de tiempo de juegos
-async function cargarEstadisticasJuegos() {
-    const ctxElement = document.getElementById('myChart');
-    if (!ctxElement) return;
-
-    const datos = await fetchConValidacion('/api/estadisticas-juegos');
-    if (!datos) return;
-
-    const ctx = ctxElement.getContext('2d');
-    
-    if (myChart) myChart.destroy();
-    
-    myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: datos.map(item => item.nombre_juego),
-            datasets: [{
-                label: 'Tiempo jugado (minutos)',
-                data: datos.map(item => parseInt(item.tiempo_jugado) || 0),
-                backgroundColor: COLORES_GRAFICO.fondo,
-                borderColor: COLORES_GRAFICO.borde,
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'right',
-                    labels: { font: { size: 14 }, padding: 15 }
-                },
-                title: {
-                    display: true,
-                    text: 'Tiempo de Juego por Actividad',
-                    font: { size: 18, weight: 'bold' }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: (context) => {
-                            const value = context.parsed || 0;
-                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                            const percentage = ((value / total) * 100).toFixed(1);
-                            return `${context.label}: ${value} minutos (${percentage}%)`;
-                        }
-                    }
-                }
-            }
-        }
-    });
 }
 
 // Renderizar diferentes vistas según la sección
@@ -208,11 +147,30 @@ function renderSeccion(nombreNiño, seccion) {
             </form>
             <div id="lista-objetivos" class="bg-gradient-to-br from-[var(--blue-wool)] to-[var(--pink-wool)] p-6 rounded-xl shadow-md">
             </div>`,
-        progreso: `
-            <h3 class="text-3xl font-bold text-[var(--teal-wool)] mb-6 text-center">Progreso de ${nombreNiño}</h3>
-            <p class="text-center text-[var(--gray-medium)] mb-8">Seguimiento del desarrollo</p>
-            <div class="bg-gradient-to-br from-[var(--blue-wool)] to-[var(--pink-wool)] p-6 rounded-xl shadow-md">
-                <p class="text-lg text-gray-600">Métricas de progreso próximamente...</p>
+        racha: `
+            <h3 class="text-2xl font-bold text-[var(--teal-wool)] mb-4 text-center">🔥 Racha de ${nombreNiño}</h3>
+            <div class="bg-white rounded-xl p-4 max-w-xl mx-auto shadow-lg">
+                <!-- Estadísticas -->
+                <div class="flex justify-around mb-4 p-3 bg-gray-100 rounded-lg">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-[var(--primary)]" id="streak">0</div>
+                        <div class="text-[10px] text-gray-600">Racha Actual</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-[var(--primary)]" id="total">0</div>
+                        <div class="text-[10px] text-gray-600">Total Días</div>
+                    </div>
+                </div>
+
+                <!-- Controles del calendario -->
+                <div class="flex justify-between items-center mb-3">
+                    <button id="prev-month" class="bg-[var(--accent-red)] text-white px-3 py-1.5 rounded-lg hover:bg-[var(--accent-red-hover)] transition-all text-xs font-medium">◀</button>
+                    <div class="text-sm font-bold text-gray-800" id="month-year"></div>
+                    <button id="next-month" class="bg-[var(--accent-red)] text-white px-3 py-1.5 rounded-lg hover:bg-[var(--accent-red-hover)] transition-all text-xs font-medium">▶</button>
+                </div>
+
+                <!-- Calendario -->
+                <div class="grid grid-cols-7 gap-1.5" id="calendar-container"></div>
             </div>`,
         juegos: `
             <h3 class="text-3xl font-bold text-[var(--teal-wool)] mb-6 text-center">Juegos de ${nombreNiño}</h3>
@@ -253,6 +211,12 @@ function cambiarSeccion(seccion, nombreNiño) {
     if (seccion === 'objetivos') {
         formObjetivos();
     }
+
+    // Si es la sección de racha, inicializar el calendario
+    if (seccion === 'racha') {
+        const idNiño = obtenerIdNiñoDeURL();
+        if (idNiño) initCalendario(idNiño);
+    }
 }
 
 async function cargarDatosNiñoYActualizarUI(idNiño) {
@@ -272,7 +236,7 @@ async function cargarDatosNiñoYActualizarUI(idNiño) {
                     <button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="estadisticas">Estadísticas</button>
                     <button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="informacion">Información</button>
                     <button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="objetivos">Objetivos</button>
-                    <button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="progreso">Progreso</button>
+                    <button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="racha">Racha</button>
                     <button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="juegos">Juegos</button>
                 </div>
                 <section id="content-section" class="col-span-5 bg-[var(--white)] rounded-2xl shadow-xl p-8 border-[5px] border-[var(--black)]">
