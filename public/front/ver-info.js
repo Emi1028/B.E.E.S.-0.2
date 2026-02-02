@@ -141,6 +141,7 @@ function renderSeccion(nombreNiño, seccion) {
             <h3 class="text-3xl font-bold text-[var(--teal-wool)] mb-6 text-center">Objetivos de ${nombreNiño}</h3>
             <p class="text-center text-[var(--gray-medium)] mb-2">Metas y objetivos del niño</p>
             <p class="text-center text-[var(--gray-medium)] mb-8">Aqui puede definir que objetivos debe cumplir el niños</p>
+            <p class="text-center text-[var(--gray-medium)] mb-8">simpre debe colocar 3 objetivos para la racha</p>
             <form id="objetivos-form" class="w-full grid grid-cols-6 mb-6">
                 <input id="nuevo-objetivo" type="text" placeholder="Agregar nuevo objetivo" class="col-span-5"/>
                 <button id="agregar-objetivo"  type="submit" class="bg-[var(--primary)] text-white px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200">Agregar Objetivo</button>
