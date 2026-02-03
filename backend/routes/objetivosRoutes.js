@@ -13,5 +13,6 @@ router.get('/ObtenerRacha/:id_nino', requireAuth, objetivos.obtenerRacha);
 // Rutas de racha con base de datos
 router.get('/ObtenerDiasCompletados/:id_nino', requireAuth, racha.obtenerDiasCompletados);
 router.get('/CalcularRacha/:id_nino', requireAuth, racha.calcularRacha);
+router.post('/VerificarRachaDiaria/:id_nino', requireAuth, racha.verificarYActualizarRachaDiaria);
 
 module.exports = router;

@@ -42,8 +42,15 @@ class CalendarioRacha {
         }
     }
 
+    async verificarYActualizarRachaDiaria() {
+        await fetchConValidacion(`/api/VerificarRachaDiaria/${this.idNiño}`, {
+            method: 'POST'
+        });
+    }
+
     async render() {
         await this.cargarObjetivosDB();
+        await this.verificarYActualizarRachaDiaria();
         await this.cargarDiasCompletados();
         await this.cargarEstadisticas();
         
