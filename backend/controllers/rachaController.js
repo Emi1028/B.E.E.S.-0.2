@@ -126,9 +126,16 @@ exports.verificarYActualizarRachaDiaria = async (req, res) => {
             [id_nino]
         );
         
-        const hoy = new Date().toISOString().split('T')[0];
+        // Usar fecha local
+        const ahora = new Date();
+        const hoy = `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, '0')}-${String(ahora.getDate()).padStart(2, '0')}`;
         
-        if (objetivos[0].total > 0 && objetivos[0].total === objetivos[0].completados) {
+        const total = parseInt(objetivos[0].total);
+        const completados = parseInt(objetivos[0].completados);
+        
+        console.log('🔍 Verificación racha:', { id_nino, total, completados, fecha: hoy });
+        
+        if (total > 0 && total === completados) {
             // Todos completados - registrar día
             await pool.query(
                 `INSERT INTO racha_diaria (id_niño, fecha, completado) 
@@ -136,6 +143,7 @@ exports.verificarYActualizarRachaDiaria = async (req, res) => {
                  ON DUPLICATE KEY UPDATE completado = 1`,
                 [id_nino, hoy]
             );
+            console.log('✅ Día marcado como completado');
             res.json({ success: true, diaCompletado: true });
         } else {
             // No todos completados - marcar como no completado
@@ -145,6 +153,7 @@ exports.verificarYActualizarRachaDiaria = async (req, res) => {
                  ON DUPLICATE KEY UPDATE completado = 0`,
                 [id_nino, hoy]
             );
+            console.log('❌ Día NO completado');
             res.json({ success: true, diaCompletado: false });
         }
     } catch (error) {
