@@ -72,7 +72,9 @@ async function cargarObjetivos(idNiño) {
     contenedor.innerHTML = data.objetivos.map(obj => `
         <div class="bg-white p-4 rounded-lg mb-3 flex justify-between items-center shadow ${obj.completado ? 'border-2 border-green-500 bg-green-50' : ''}">
             <div class="flex items-center align-center gap-4">
-                ${obj.completado ? '<span class="text-2xl">✅</span>' : ''}
+                <span class="text-3xl">
+                    ${obj.completado ? '✅' : '⬜'}
+                </span>
                 <p class="text-lg font-semibold ${obj.completado ? 'text-green-700 line-through' : 'text-gray-800'}">${obj.texto_objetivo}</p>
                 <p class="text-sm text-gray-500">Creado: ${new Date(obj.fecha_creacion).toLocaleDateString()}</p>
                 ${obj.completado ? '<span class="text-xs text-green-600 font-bold">COMPLETADO</span>' : ''}
@@ -85,20 +87,21 @@ async function cargarObjetivos(idNiño) {
         </div>
     `).join('');
     
-    // Event delegation para eliminar
+    // Event delegation solo para eliminar
     contenedor.onclick = async (e) => {
-        if(!e.target.classList.contains('eliminar-objetivo')) return;
-        
-        if(!confirm('¿Estás seguro de eliminar este objetivo?')) return;
-        
-        const result = await fetchConValidacion(`/api/EliminarObjetivo/${e.target.dataset.id}`, {
-            method: 'DELETE'
-        });
-        
-        if(result?.success) {
-            cargarObjetivos(idNiño);
-        } else {
-            alert(result?.message || 'Error al eliminar objetivo');
+        // Eliminar objetivo
+        if(e.target.classList.contains('eliminar-objetivo')) {
+            if(!confirm('¿Estás seguro de eliminar este objetivo?')) return;
+            
+            const result = await fetchConValidacion(`/api/EliminarObjetivo/${e.target.dataset.id}`, {
+                method: 'DELETE'
+            });
+            
+            if(result?.success) {
+                cargarObjetivos(idNiño);
+            } else {
+                alert(result?.message || 'Error al eliminar objetivo');
+            }
         }
     };
 }

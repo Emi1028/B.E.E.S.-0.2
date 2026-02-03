@@ -5,17 +5,8 @@ class CalendarioRacha {
     constructor(idNiño) {
         this.idNiño = idNiño;
         this.date = new Date();
-        this.completed = this.load('days_' + idNiño) || new Set();
+        this.completed = new Set();
         this.objetivosDB = [];
-    }
-
-    load(key) {
-        const data = localStorage.getItem(key);
-        return key.includes('days_') ? new Set(JSON.parse(data || '[]')) : JSON.parse(data || '{}');
-    }
-
-    save() {
-        localStorage.setItem('days_' + this.idNiño, JSON.stringify([...this.completed]));
     }
 
     dateStr(y, m, d) {
@@ -29,20 +20,32 @@ class CalendarioRacha {
         }
     }
 
+    async cargarDiasCompletados() {
+        const y = this.date.getFullYear();
+        const m = this.date.getMonth();
+        
+        const data = await fetchConValidacion(
+            `/api/ObtenerDiasCompletados/${this.idNiño}?año=${y}&mes=${m}`
+        );
+        
+        if (data?.success) {
+            this.completed = new Set(data.dias);
+        }
+    }
+
+    async cargarEstadisticas() {
+        const data = await fetchConValidacion(`/api/CalcularRacha/${this.idNiño}`);
+        
+        if (data?.success) {
+            this.rachaActual = data.racha;
+            this.totalDias = data.total;
+        }
+    }
+
     async render() {
         await this.cargarObjetivosDB();
-        
-        // Verificar si todos los objetivos están completados para marcar el día de hoy
-        const today = this.dateStr(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-        if (this.objetivosDB.length > 0) {
-            const todosCompletados = this.objetivosDB.every(obj => obj.completado === 1 || obj.completado === true);
-            if (todosCompletados) {
-                this.completed.add(today);
-            } else {
-                this.completed.delete(today);
-            }
-            this.save();
-        }
+        await this.cargarDiasCompletados();
+        await this.cargarEstadisticas();
         
         const cal = document.getElementById('calendar-container');
         const y = this.date.getFullYear();
@@ -102,16 +105,8 @@ class CalendarioRacha {
     }
 
     updateStats() {
-        let streak = 0;
-        let d = new Date();
-        
-        while (this.completed.has(this.dateStr(d.getFullYear(), d.getMonth(), d.getDate()))) {
-            streak++;
-            d.setDate(d.getDate() - 1);
-        }
-        
-        document.getElementById('streak').textContent = streak;
-        document.getElementById('total').textContent = this.completed.size;
+        document.getElementById('streak').textContent = this.rachaActual || 0;
+        document.getElementById('total').textContent = this.totalDias || 0;
     }
 }
 
@@ -120,18 +115,17 @@ async function initCalendario(idNiño) {
     const calendario = new CalendarioRacha(idNiño);
     await calendario.render();
     
-    document.getElementById('prev-month').onclick = () => {
+    document.getElementById('prev-month').onclick = async () => {
         calendario.date.setMonth(calendario.date.getMonth() - 1);
-        calendario.render();
+        await calendario.render();
     };
     
-    document.getElementById('next-month').onclick = () => {
+    document.getElementById('next-month').onclick = async () => {
         calendario.date.setMonth(calendario.date.getMonth() + 1);
-        calendario.render();
+        await calendario.render();
     };
 }
 
-// Exponer funciones globalmente para que ver-info.js pueda usarlas
+// Exportar funciones para uso global
 window.initCalendario = initCalendario;
 window.CalendarioRacha = CalendarioRacha;
-
