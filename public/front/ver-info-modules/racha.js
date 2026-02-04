@@ -14,12 +14,9 @@ class CalendarioRacha {
     }
 
     async cargarObjetivosDB() {
-        console.log('🎯 Cargando objetivos para niño:', this.idNiño);
         const data = await fetchConValidacion(`/api/ObtenerRacha/${this.idNiño}`);
-        console.log('📥 Objetivos recibidos:', data);
         if (data?.success && data.objetivos) {
             this.objetivosDB = data.objetivos;
-            console.log('✅ Objetivos guardados:', this.objetivosDB);
         }
     }
 
@@ -27,46 +24,36 @@ class CalendarioRacha {
         const y = this.date.getFullYear();
         const m = this.date.getMonth();
         
-        console.log('📅 Consultando días completados:', { año: y, mes: m });
         const data = await fetchConValidacion(
             `/api/ObtenerDiasCompletados/${this.idNiño}?año=${y}&mes=${m}`
         );
         
-        console.log('📥 Días recibidos:', data);
         if (data?.success) {
             this.completed = new Set(data.dias);
-            console.log('✅ Días completados guardados:', [...this.completed]);
         }
     }
 
     async cargarEstadisticas() {
-        console.log('📊 Cargando estadísticas...');
         const data = await fetchConValidacion(`/api/CalcularRacha/${this.idNiño}`);
         
-        console.log('📥 Estadísticas recibidas:', data);
         if (data?.success) {
             this.rachaActual = data.racha;
             this.totalDias = data.total;
-            console.log('✅ Racha:', this.rachaActual, 'Total:', this.totalDias);
         }
     }
 
     async verificarYActualizarRachaDiaria() {
-        console.log('🔍 Verificando racha diaria para niño:', this.idNiño);
-        const result = await fetchConValidacion(`/api/VerificarRachaDiaria/${this.idNiño}`, {
+        await fetchConValidacion(`/api/VerificarRachaDiaria/${this.idNiño}`, {
             method: 'POST'
         });
-        console.log('📥 Resultado verificación:', result);
     }
 
     async render() {
-        console.log('🎨 === INICIANDO RENDER DEL CALENDARIO ===');
         await this.cargarObjetivosDB();
         await this.verificarYActualizarRachaDiaria();
         await this.cargarDiasCompletados();
         await this.cargarEstadisticas();
         
-        console.log('🗓️ Renderizando calendario...');
         const cal = document.getElementById('calendar-container');
         const y = this.date.getFullYear();
         const m = this.date.getMonth();

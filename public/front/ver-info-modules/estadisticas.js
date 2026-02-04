@@ -19,12 +19,12 @@ const COLORES_GRAFICO = {
 let myChart;
 
 // Función para cargar datos de tiempo de juegos
-async function cargarEstadisticasJuegos() {
+async function cargarEstadisticasJuegos(idNino) {
     const ctxElement = document.getElementById('myChart');
     if (!ctxElement) return;
 
-    const datos = await fetchConValidacion('/api/estadisticas-juegos');
-    if (!datos) return;
+    const datos = await fetchConValidacion(`/api/estadisticas-juegos/${idNino}`);
+    if (!datos || datos.length === 0) return;
 
     const ctx = ctxElement.getContext('2d');
     
@@ -35,8 +35,8 @@ async function cargarEstadisticasJuegos() {
         data: {
             labels: datos.map(item => item.nombre_juego),
             datasets: [{
-                label: 'Tiempo jugado (minutos)',
-                data: datos.map(item => parseInt(item.tiempo_jugado) || 0),
+                label: 'Puntaje máximo',
+                data: datos.map(item => parseInt(item.puntaje) || 0),
                 backgroundColor: COLORES_GRAFICO.fondo,
                 borderColor: COLORES_GRAFICO.borde,
                 borderWidth: 2
@@ -52,7 +52,7 @@ async function cargarEstadisticasJuegos() {
                 },
                 title: {
                     display: true,
-                    text: 'Tiempo de Juego por Actividad',
+                    text: 'Puntajes Máximos por Juego',
                     font: { size: 18, weight: 'bold' }
                 },
                 tooltip: {
@@ -61,7 +61,7 @@ async function cargarEstadisticasJuegos() {
                             const value = context.parsed || 0;
                             const total = context.dataset.data.reduce((a, b) => a + b, 0);
                             const percentage = ((value / total) * 100).toFixed(1);
-                            return `${context.label}: ${value} minutos (${percentage}%)`;
+                            return `${context.label}: ${value} puntos (${percentage}%)`;
                         }
                     }
                 }

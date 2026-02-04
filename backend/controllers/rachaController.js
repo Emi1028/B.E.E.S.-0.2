@@ -1,28 +1,5 @@
 const pool = require('../db/connection');
 
-// Registrar día completado
-exports.registrarDiaCompletado = async (req, res) => {
-    const { id_niño, fecha } = req.body;
-    
-    if (!id_niño || !fecha) {
-        return res.status(400).json({ success: false, message: 'Datos incompletos' });
-    }
-    
-    try {
-        await pool.query(
-            `INSERT INTO racha_diaria (id_niño, fecha, completado) 
-             VALUES (?, ?, 1) 
-             ON DUPLICATE KEY UPDATE completado = 1`,
-            [id_niño, fecha]
-        );
-        
-        res.json({ success: true, message: 'Día registrado' });
-    } catch (error) {
-        console.error('Error registrando día:', error);
-        res.status(500).json({ success: false, message: 'Error en el servidor' });
-    }
-};
-
 // Obtener días completados de un mes específico
 exports.obtenerDiasCompletados = async (req, res) => {
     const { id_nino } = req.params;
@@ -41,8 +18,6 @@ exports.obtenerDiasCompletados = async (req, res) => {
         const ultimoDiaDelMes = new Date(añoActual, mesActual + 1, 0).getDate();
         const ultimoDia = `${añoActual}-${String(mesActual + 1).padStart(2, '0')}-${ultimoDiaDelMes}`;
         
-        console.log('📅 Consultando días completados:', { id_nino, año: añoActual, mes: mesActual, primerDia, ultimoDia });
-        
         const [dias] = await pool.query(
             `SELECT fecha, completado FROM racha_diaria 
              WHERE id_niño = ? 
@@ -50,11 +25,8 @@ exports.obtenerDiasCompletados = async (req, res) => {
             [id_nino, primerDia, ultimoDia]
         );
         
-        console.log('🗂️ Todos los registros del mes:', dias);
-        
         // Filtrar solo los completados
         const diasCompletados = dias.filter(d => d.completado === 1);
-        console.log('✅ Días completados:', diasCompletados.length, diasCompletados.map(d => d.fecha));
         
         res.json({ 
             success: true, 
@@ -133,29 +105,16 @@ exports.verificarYActualizarRachaDiaria = async (req, res) => {
         const total = parseInt(objetivos[0].total);
         const completados = parseInt(objetivos[0].completados);
         
-        console.log('🔍 Verificación racha:', { id_nino, total, completados, fecha: hoy });
+        const completadoHoy = total > 0 && total === completados ? 1 : 0;
         
-        if (total > 0 && total === completados) {
-            // Todos completados - registrar día
-            await pool.query(
-                `INSERT INTO racha_diaria (id_niño, fecha, completado) 
-                 VALUES (?, ?, 1) 
-                 ON DUPLICATE KEY UPDATE completado = 1`,
-                [id_nino, hoy]
-            );
-            console.log('✅ Día marcado como completado');
-            res.json({ success: true, diaCompletado: true });
-        } else {
-            // No todos completados - marcar como no completado
-            await pool.query(
-                `INSERT INTO racha_diaria (id_niño, fecha, completado) 
-                 VALUES (?, ?, 0) 
-                 ON DUPLICATE KEY UPDATE completado = 0`,
-                [id_nino, hoy]
-            );
-            console.log('❌ Día NO completado');
-            res.json({ success: true, diaCompletado: false });
-        }
+        await pool.query(
+            `INSERT INTO racha_diaria (id_niño, fecha, completado) 
+             VALUES (?, ?, ?) 
+             ON DUPLICATE KEY UPDATE completado = ?`,
+            [id_nino, hoy, completadoHoy, completadoHoy]
+        );
+        
+        res.json({ success: true, diaCompletado: completadoHoy === 1 });
     } catch (error) {
         console.error('Error verificando racha:', error);
         res.status(500).json({ success: false, message: 'Error en el servidor' });

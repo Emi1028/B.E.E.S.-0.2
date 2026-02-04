@@ -208,7 +208,8 @@ function cambiarSeccion(seccion, nombreNiño) {
     
     // Si es la sección de estadísticas, cargar el gráfico
     if (seccion === 'estadisticas') {
-        setTimeout(() => cargarEstadisticasJuegos(), 100);
+        const idNiño = obtenerIdNiñoDeURL();
+        if (idNiño) setTimeout(() => cargarEstadisticasJuegos(idNiño), 100);
     }
     
     // Si es la sección de objetivos, configurar el formulario
@@ -264,7 +265,8 @@ async function cargarDatosNiñoYActualizarUI(idNiño) {
         btnEstadisticas.classList.add('bg-[var(--accent-red)]');
     }
     
-    cargarEstadisticasJuegos();
+    const idNiño = obtenerIdNiñoDeURL();
+    if (idNiño) cargarEstadisticasJuegos(idNiño);
 }
 
 async function checkSession() {

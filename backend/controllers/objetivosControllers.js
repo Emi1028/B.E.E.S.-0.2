@@ -109,34 +109,20 @@ exports.toggleCompletarObjetivo = async (req, res) => {
             [id_niño]
         );
         
-        // Usar fecha local en lugar de UTC
         const ahora = new Date();
         const hoy = `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, '0')}-${String(ahora.getDate()).padStart(2, '0')}`;
         
         const total = parseInt(objetivos[0].total);
         const completados = parseInt(objetivos[0].completados);
         
-        console.log('🎯 Estado objetivos:', { id_niño, total, completados, fecha: hoy });
-        
         // Actualizar racha en base de datos
-        if (total > 0 && total === completados) {
-            console.log('✅ TODOS COMPLETADOS - Marcando día en racha');
-            await pool.query(
-                `INSERT INTO racha_diaria (id_niño, fecha, completado) 
-                 VALUES (?, ?, 1) 
-                 ON DUPLICATE KEY UPDATE completado = 1`,
-                [id_niño, hoy]
-            );
-            console.log('💾 Guardado en BD:', { id_niño, fecha: hoy, completado: 1 });
-        } else {
-            console.log('❌ NO TODOS COMPLETADOS - Desmarcando día');
-            await pool.query(
-                `INSERT INTO racha_diaria (id_niño, fecha, completado) 
-                 VALUES (?, ?, 0) 
-                 ON DUPLICATE KEY UPDATE completado = 0`,
-                [id_niño, hoy]
-            );
-        }
+        const completadoHoy = total > 0 && total === completados ? 1 : 0;
+        await pool.query(
+            `INSERT INTO racha_diaria (id_niño, fecha, completado) 
+             VALUES (?, ?, ?) 
+             ON DUPLICATE KEY UPDATE completado = ?`,
+            [id_niño, hoy, completadoHoy, completadoHoy]
+        );
         
         res.json({ 
             success: true, 
