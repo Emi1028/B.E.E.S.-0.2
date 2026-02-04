@@ -130,8 +130,8 @@ function renderSeccion(nombreNiño, seccion) {
         estadisticas: `
             <h3 class="text-3xl font-bold text-[var(--teal-wool)] mb-6 text-center">Estadísticas de ${nombreNiño}</h3>
             <p class="text-center text-[var(--gray-medium)] mb-8">Visualiza el tiempo dedicado a cada actividad lúdica</p>
-            <div class="bg-gradient-to-br from-[var(--blue-wool)] to-[var(--pink-wool)] rounded-xl p-6 shadow-[0_4px_10px_rgba(0,0,0,0.3)]">
-                <canvas id="myChart" class="max-w-full"></canvas>
+            <div class="bg-gradient-to-br from-[var(--blue-wool)] to-[var(--pink-wool)] rounded-xl p-6 shadow-[0_4px_10px_rgba(0,0,0,0.3)] max-w-2xl mx-auto">
+                <canvas id="myChart" style="max-height: 400px;"></canvas>
             </div>`,
         informacion: `
             <h3 class="text-3xl font-bold text-[var(--teal-wool)] mb-6 text-center">Información de ${nombreNiño}</h3>
@@ -265,8 +265,7 @@ async function cargarDatosNiñoYActualizarUI(idNiño) {
         btnEstadisticas.classList.add('bg-[var(--accent-red)]');
     }
     
-    const idNiño = obtenerIdNiñoDeURL();
-    if (idNiño) cargarEstadisticasJuegos(idNiño);
+    cargarEstadisticasJuegos(idNiño);
 }
 
 async function checkSession() {

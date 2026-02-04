@@ -31,7 +31,7 @@ async function cargarEstadisticasJuegos(idNino) {
     if (myChart) myChart.destroy();
     
     myChart = new Chart(ctx, {
-        type: 'pie',
+        type: 'bar',
         data: {
             labels: datos.map(item => item.nombre_juego),
             datasets: [{
