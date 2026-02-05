@@ -99,31 +99,6 @@ exports.toggleCompletarObjetivo = async (req, res) => {
             [completado, id_objetivo]
         );
         
-        const id_niño = objetivo[0].id_niño;
-        
-        // Verificar si todos los objetivos están completados para actualizar racha
-        const [objetivos] = await pool.query(
-            `SELECT COUNT(*) as total, 
-                    SUM(CASE WHEN completado = 1 THEN 1 ELSE 0 END) as completados
-             FROM objetivos WHERE id_niño = ?`,
-            [id_niño]
-        );
-        
-        const ahora = new Date();
-        const hoy = `${ahora.getFullYear()}-${String(ahora.getMonth() + 1).padStart(2, '0')}-${String(ahora.getDate()).padStart(2, '0')}`;
-        
-        const total = parseInt(objetivos[0].total);
-        const completados = parseInt(objetivos[0].completados);
-        
-        // Actualizar racha en base de datos
-        const completadoHoy = total > 0 && total === completados ? 1 : 0;
-        await pool.query(
-            `INSERT INTO racha_diaria (id_niño, fecha, completado) 
-             VALUES (?, ?, ?) 
-             ON DUPLICATE KEY UPDATE completado = ?`,
-            [id_niño, hoy, completadoHoy, completadoHoy]
-        );
-        
         res.json({ 
             success: true, 
             message: completado ? 'Objetivo completado' : 'Objetivo desmarcado'

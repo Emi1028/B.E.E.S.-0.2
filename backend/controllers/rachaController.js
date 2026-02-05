@@ -105,13 +105,17 @@ exports.verificarYActualizarRachaDiaria = async (req, res) => {
         const total = parseInt(objetivos[0].total);
         const completados = parseInt(objetivos[0].completados);
         
-        const completadoHoy = total > 0 && total === completados ? 1 : 0;
+        // Solo marca como completado si tiene exactamente 3 objetivos y los 3 están completados
+        const completadoHoy = (total === 3 && completados === 3) ? 1 : 0;
         
+        // Insertar o actualizar solo si hay cambios
         await pool.query(
-            `INSERT INTO racha_diaria (id_niño, fecha, completado) 
-             VALUES (?, ?, ?) 
-             ON DUPLICATE KEY UPDATE completado = ?`,
-            [id_nino, hoy, completadoHoy, completadoHoy]
+            `INSERT INTO racha_diaria (id_niño, fecha, completado, fecha_registro) 
+             VALUES (?, ?, ?, NOW()) 
+             ON DUPLICATE KEY UPDATE 
+                completado = VALUES(completado),
+                fecha_registro = NOW()`,
+            [id_nino, hoy, completadoHoy]
         );
         
         res.json({ success: true, diaCompletado: completadoHoy === 1 });
