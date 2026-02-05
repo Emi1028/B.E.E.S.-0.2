@@ -242,7 +242,7 @@ async function cargarDatosNiñoYActualizarUI(idNiño) {
                     <button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="informacion">Información</button>
                     <button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="objetivos">Objetivos</button>
                     <button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="racha">Racha</button>
-                    <button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="juegos">Juegos</button>
+                    <!--<button class="btn-seccion bg-[var(--primary)] text-white font-extrabold px-4 py-2 rounded-full hover:bg-[var(--gradient-blue-mid)] transition-colors duration-200" data-seccion="juegos">Juegos</button>-->
                 </div>
                 <section id="content-section" class="col-span-5 bg-[var(--white)] rounded-2xl shadow-xl p-8 border-[5px] border-[var(--black)]">
                     ${renderSeccion(nombreNiño, 'estadisticas')}
