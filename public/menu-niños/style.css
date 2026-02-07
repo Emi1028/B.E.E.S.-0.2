@@ -31,8 +31,8 @@ main{
     height: 40px;
 }
 dialog {
-    width: 430px;
-    max-width: 90%;
+    width: 650px;
+    max-width: 95%;
     max-height: 95vh;
     overflow-y: auto;
     margin: auto;
@@ -74,7 +74,11 @@ dialog label {
     color: var(--white);
     text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
-dialog input {
+dialog input[type="text"],
+dialog input[type="email"],
+dialog input[type="password"],
+dialog input[type="number"],
+dialog input[type="date"] {
     width: 100%;
     padding: 10px 14px;
     margin-bottom: 12px;
@@ -87,10 +91,16 @@ dialog input {
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-dialog input::placeholder {
+dialog input[type="text"]::placeholder,
+dialog input[type="email"]::placeholder,
+dialog input[type="password"]::placeholder {
     color: var(--gray-light);
 }
-dialog input:focus {
+dialog input[type="text"]:focus,
+dialog input[type="email"]:focus,
+dialog input[type="password"]:focus,
+dialog input[type="number"]:focus,
+dialog input[type="date"]:focus {
     outline: none;
     border-color:var(--one-esmeralda) ;
     transform: translateY(-2px);
@@ -109,7 +119,7 @@ dialog button.load {
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 20px;
     transition: all 0.3s ease;
     box-shadow: 0 5px 15px var(--shadow-bottom);
     text-transform: uppercase;
@@ -147,4 +157,114 @@ dialog form[method="dialog"] button:hover {
     border-color: var(--gray-light);
     transform: rotate(360deg) scale(1.1);
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Estilos para el cuestionario */
+.form-input-group {
+    margin-bottom: 20px;
+}
+
+.questionnaire {
+    margin: 25px 0;
+    width: 100%;
+}
+
+.questionnaire table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    table-layout: fixed;
+}
+
+.questionnaire thead {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.questionnaire th {
+    padding: 12px 8px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--white);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.questionnaire th:first-child {
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 40%;
+}
+
+.questionnaire th:not(:first-child) {
+    width: 15%;
+}
+
+.questionnaire tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.questionnaire tbody tr:last-child {
+    border-bottom: none;
+}
+
+.questionnaire tbody tr:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transition: background 0.2s ease;
+}
+
+.questionnaire td {
+    padding: 15px 8px;
+    text-align: center;
+    color: var(--white);
+    font-size: 0.85rem;
+    vertical-align: middle;
+}
+
+.questionnaire td:first-child {
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: 500;
+}
+
+.questionnaire input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin: 0;
+    accent-color: var(--accent-red);
+    transition: transform 0.2s ease;
+}
+
+.questionnaire input[type="radio"]:hover {
+    transform: scale(1.15);
+}
+
+/* Responsive para el cuestionario */
+@media (max-width: 768px) {
+    dialog {
+        width: 95%;
+        padding: 20px 15px;
+    }
+    
+    .questionnaire th,
+    .questionnaire td {
+        padding: 8px 4px;
+        font-size: 0.7rem;
+    }
+    
+    .questionnaire th:first-child,
+    .questionnaire td:first-child {
+        padding-left: 8px;
+        padding-right: 5px;
+    }
+    
+    .questionnaire input[type="radio"] {
+        width: 16px;
+        height: 16px;
+    }
 }

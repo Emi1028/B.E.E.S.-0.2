@@ -1,27 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
     const dialogPerfil = document.getElementById('Agregar-perfiles');
     const formPerfil = document.querySelector('form[name="crearPerfil"]');
+    
     if (formPerfil) {
         formPerfil.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const n_nombre   = formPerfil.querySelector('input[name="n_nombre"]').value;
+            
+            const n_nombre = formPerfil.querySelector('input[name="n_nombre"]').value;
+            
             if (!n_nombre.trim()) {
                 return alert("El nombre no puede estar vacío");
-            }            
+            }
+            
+            // Obtener respuestas del cuestionario
+            const q1 = formPerfil.querySelector('input[name="q1"]:checked');
+            const q2 = formPerfil.querySelector('input[name="q2"]:checked');
+            const q3 = formPerfil.querySelector('input[name="q3"]:checked');
+            const q4 = formPerfil.querySelector('input[name="q4"]:checked');
+            
+            // Validar que todas las preguntas fueron respondidas
+            if (!q1 || !q2 || !q3 || !q4) {
+                return alert('Por favor responde todas las preguntas del cuestionario');
+            }
+            
+            const datosFormulario = {
+                n_nombre,
+                q1: parseInt(q1.value),
+                q2: parseInt(q2.value),
+                q3: parseInt(q3.value),
+                q4: parseInt(q4.value)
+            };
+            
             try {
-                console.log('Enviando datos para crear perfil:', { n_nombre });
+                console.log('Enviando datos para crear perfil:', datosFormulario);
                 const response = await fetch('/api/CrearPerfil', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
-                    body: JSON.stringify({n_nombre})
+                    body: JSON.stringify(datosFormulario)
                 });
+                
                 const data = await response.json();
                 
                 if (data.success) {
                     alert('Perfil creado exitosamente');
+                    formPerfil.reset();
                     dialogPerfil.close();
-                    checkSession(); // Recargar para actualizar la interfaz
+                    checkSession();
                 } else {
                     alert(data.message || 'Error al crear perfil');
                 }
@@ -31,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    
     configurarEliminarPerfil();
     checkSession();
 });
