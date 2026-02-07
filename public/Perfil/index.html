@@ -42,20 +42,19 @@
                 <button commandfor="inicio-sesion" command="show-modal" class="bg-[var(--black)] hover:bg-[var(--accent-red-hover)] text-[var(--Twhite)] border-none p-3 text-base lg:text-2xl md:text-xl cursor-pointer transition-colors duration-200 text-center font-bold"  id="si" type="submit"></button>
             </div>
         </header>
-        <div id="main">
-            <main class="flex justify-center items-center mx-auto bg-[var(--gradient-blue-mid)] font-['Segoe_UI',sans-serif]">
-                <div class="w-[400px] max-w-[90%] h-[17rem] text-center text-[var(--white)]
-                            border-2 border-[var(--black)] rounded-[10px] p-[30px]
-                            bg-[var(--blue-wool)] shadow-[0_4px_10px_rgba(0,0,0,0.4)]">
-                    <h1 class="text-3xl mt-2 mb-3 font-semibold">Requiere iniciar sesión</h1>
-                    <p class="text-[1.5rem]">inicie sesión<br>Gracias por por su comprecion</p>
-                    <br>
-                    <form action="../index.html">
-                        <button type="submit" class="bg-[var(--accent-red)] text-[var(--white)] border-none rounded-[30px]
-                        p-[10px] text-[1rem] cursor-pointer font-bold no-underline
-                        transition-colors duration-200
-                        ml-[5.5rem] mr-[5.5rem] mt-[5px] text-center
-                        hover:bg-[var(--accent-red-hover)]">
+        <div id="main" style="opacity: 0; transition: opacity 0.3s ease-in-out;">
+            <main class="flex justify-center items-start mx-auto bg-[var(--gradient-blue-mid)] font-['Segoe_UI',sans-serif] min-h-screen px-4 pt-20 pb-12">
+                <div class="w-full max-w-md text-center text-[var(--white)]
+                            border-4 border-[var(--black)] rounded-2xl p-8 sm:p-10
+                            bg-[var(--blue-wool)] shadow-[0_8px_24px_rgba(0,0,0,0.5)]">
+                    <h1 class="text-4xl sm:text-5xl mb-4 font-bold">Requiere iniciar sesión</h1>
+                    <p class="text-lg sm:text-xl leading-relaxed mb-8">Debe iniciar sesión<br>Gracias por su comprensión</p>
+                    <form action="../index.html" class="w-full flex justify-center">
+                        <button type="submit" class="bg-[var(--accent-red)] text-[var(--white)] 
+                        border-none rounded-full px-10 py-3 text-lg font-bold cursor-pointer
+                        transition-all duration-200 shadow-lg
+                        hover:bg-[var(--accent-red-hover)] hover:shadow-2xl hover:scale-105 hover:-translate-y-1
+                        active:translate-y-0 active:scale-100">
                             Volver al inicio
                         </button>
                     </form>

@@ -122,6 +122,9 @@ async function checkSession() {
         
         if (data.autenticado && data.usuario) {
             updateUIForLoggedUser(data.usuario);
+        } else {
+            // Usuario no autenticado - mantener interfaz de inicio
+            console.log('Usuario no autenticado - mostrando interfaz pública');
         }
     } catch (error) {
         console.error('Error verificando sesión:', error);

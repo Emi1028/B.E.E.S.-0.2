@@ -84,6 +84,9 @@ function updateUIForLoggedUser(usuario) {
         btnInformacion.classList.remove('bg-[var(--primary)]');
         btnInformacion.classList.add('bg-[var(--accent-red)]');
     }
+    
+    // Mostrar el contenido con fade-in
+    mainElement.style.opacity = '1';
 }
 
 async function checkSession() {
@@ -94,8 +97,19 @@ async function checkSession() {
         if (data.autenticado) {
             // Usuario autenticado - actualizar interfaz
             updateUIForLoggedUser(data.usuario);
+        } else {
+            // Usuario no autenticado - mostrar pantalla de error con fade-in
+            console.log('Usuario no autenticado - mostrando pantalla de acceso restringido');
+            const mainElement = document.getElementById('main');
+            if (mainElement) {
+                mainElement.style.opacity = '1';
+            }
         }
     } catch (error) {
         console.error('Error verificando sesión:', error);
+        const mainElement = document.getElementById('main');
+        if (mainElement) {
+            mainElement.style.opacity = '1';
+        }
     }
 }

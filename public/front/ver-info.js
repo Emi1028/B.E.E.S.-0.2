@@ -265,10 +265,21 @@ async function cargarDatosNiñoYActualizarUI(idNiño) {
         btnEstadisticas.classList.add('bg-[var(--accent-red)]');
     }
     
+    // Mostrar el contenido con fade-in
+    mainElement.style.opacity = '1';
     cargarEstadisticasJuegos(idNiño);
 }
 
 async function checkSession() {
     const data = await fetchConValidacion('/api/session');
-    if (data?.autenticado) updateUIForLoggedUser(data.usuario);
+    if (data?.autenticado) {
+        updateUIForLoggedUser(data.usuario);
+    } else {
+        // Usuario no autenticado - mostrar pantalla de error con fade-in
+        console.log('Usuario no autenticado - mostrando pantalla de acceso restringido');
+        const mainElement = document.getElementById('main');
+        if (mainElement) {
+            mainElement.style.opacity = '1';
+        }
+    }
 }

@@ -61,6 +61,8 @@ function updateUIForLoggedUser(usuario) {
                     </div>
                 </div>
             </main>`;
+        // Mostrar el contenido con fade-in
+        bt.style.opacity = '1';
         actializarPerfilesNiños();
     }
 }
@@ -173,8 +175,20 @@ async function checkSession() {
         if (data.autenticado) {
             // Usuario autenticado - actualizar interfaz
             updateUIForLoggedUser(data.usuario);
+        } else {
+            // Usuario no autenticado - mostrar pantalla de error con fade-in
+            console.log('Usuario no autenticado - mostrando pantalla de acceso restringido');
+            const mainElement = document.getElementById('main');
+            if (mainElement) {
+                mainElement.style.opacity = '1';
+            }
         }
     } catch (error) {
         console.error('Error verificando sesión:', error);
+        // En caso de error, también mostrar el contenido
+        const mainElement = document.getElementById('main');
+        if (mainElement) {
+            mainElement.style.opacity = '1';
+        }
     }
 }
