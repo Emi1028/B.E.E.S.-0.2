@@ -54,21 +54,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const tdahSelect = document.getElementById('tdah-select');
     const tipoTdahSelect = document.getElementById('tipo-tdah-select');
     const tipoTdahContainer = document.getElementById('tipo-tdah-container');
+    const reconoceNumerosSelect = document.getElementById('reconoce-numeros-select');
+    const operacionesContainer = document.getElementById('operaciones-matematicas-container');
     
     // Configurar custom selects
     setupCustomSelect(tdahSelect);
     setupCustomSelect(tipoTdahSelect);
+    setupCustomSelect(document.getElementById('concentracion-select'));
+    setupCustomSelect(document.getElementById('sabe-leer-select'));
+    setupCustomSelect(document.getElementById('sabe-escribir-select'));
+    setupCustomSelect(reconoceNumerosSelect);
+    setupCustomSelect(document.getElementById('sumas-select'));
+    setupCustomSelect(document.getElementById('restas-select'));
+    setupCustomSelect(document.getElementById('nivel-matematico-select'));
     
-    // Mostrar/ocultar campo Tipo_TDAH según selección de TDAH
-    const tdahHiddenInput = tdahSelect.parentElement.querySelector('input[name="edad"]');
+    // Mostrar/ocultar campo tipo_tdah según selección de TDAH
+    const tdahHiddenInput = tdahSelect.parentElement.querySelector('input[name="tiene_tdah"]');
     if (tdahHiddenInput) {
         tdahHiddenInput.addEventListener('change', (e) => {
             if (e.target.value === 'si') {
                 tipoTdahContainer.style.display = 'block';
             } else {
                 tipoTdahContainer.style.display = 'none';
-                const tipoTdahHiddenInput = tipoTdahSelect.parentElement.querySelector('input[name="Tipo_TDAH"]');
+                const tipoTdahHiddenInput = tipoTdahSelect.parentElement.querySelector('input[name="tipo_tdah"]');
                 if (tipoTdahHiddenInput) tipoTdahHiddenInput.value = '';
+            }
+        });
+    }
+    
+    // Mostrar/ocultar operaciones matemáticas según selección de números
+    const reconoceNumerosInput = reconoceNumerosSelect.parentElement.querySelector('input[name="reconoce_numeros"]');
+    if (reconoceNumerosInput) {
+        reconoceNumerosInput.addEventListener('change', (e) => {
+            if (e.target.value === 'si') {
+                operacionesContainer.style.display = 'block';
+            } else {
+                operacionesContainer.style.display = 'none';
+                // Limpiar valores de sumas y restas
+                formPerfil.querySelector('input[name="puede_sumar"]').value = '';
+                formPerfil.querySelector('input[name="puede_restar"]').value = '';
             }
         });
     }
@@ -78,29 +102,69 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             
             const n_nombre = formPerfil.querySelector('input[name="n_nombre"]').value;
-            const edad = formPerfil.querySelector('input[name="edad"]').value;
-            const tipoTdah = formPerfil.querySelector('input[name="Tipo_TDAH"]')?.value || '';
+            const tiene_tdah = formPerfil.querySelector('input[name="tiene_tdah"]').value;
+            const tipo_tdah = formPerfil.querySelector('input[name="tipo_tdah"]').value;
+            const dificultad_concentracion = formPerfil.querySelector('input[name="dificultad_concentracion"]').value;
+            const sabe_leer = formPerfil.querySelector('input[name="sabe_leer"]').value;
+            const sabe_escribir = formPerfil.querySelector('input[name="sabe_escribir"]').value;
+            const reconoce_numeros = formPerfil.querySelector('input[name="reconoce_numeros"]').value;
+            const puede_sumar = formPerfil.querySelector('input[name="puede_sumar"]').value;
+            const puede_restar = formPerfil.querySelector('input[name="puede_restar"]').value;
+            const nivel_matematico = formPerfil.querySelector('input[name="nivel_matematico"]').value;
             
             if (!n_nombre.trim()) {
                 return alert("El nombre no puede estar vacío");
             }
             
-            if (!edad) {
+            if (!tiene_tdah) {
                 return alert("Por favor selecciona si el niño tiene diagnóstico de TDAH");
             }
             
-            if (edad === 'si' && !tipoTdah) {
+            if (tiene_tdah === 'si' && !tipo_tdah) {
                 return alert("Por favor selecciona el tipo de TDAH");
+            }
+            
+            if (!dificultad_concentracion) {
+                return alert("Por favor responde la pregunta de concentración");
+            }
+            
+            if (!sabe_leer) {
+                return alert("Por favor responde si sabe leer");
+            }
+            
+            if (!sabe_escribir) {
+                return alert("Por favor responde si sabe escribir");
+            }
+            
+            if (!reconoce_numeros) {
+                return alert("Por favor responde si reconoce números");
+            }
+            
+            if (reconoce_numeros === 'si') {
+                if (!puede_sumar) {
+                    return alert("Por favor responde si puede realizar sumas");
+                }
+                if (!puede_restar) {
+                    return alert("Por favor responde si puede realizar restas");
+                }
+            }
+            
+            if (!nivel_matematico) {
+                return alert("Por favor selecciona el nivel matemático");
             }
             
             const datosFormulario = {
                 n_nombre,
-                edad
+                tiene_tdah,
+                tipo_tdah: tipo_tdah || null,
+                dificultad_concentracion,
+                sabe_leer,
+                sabe_escribir,
+                reconoce_numeros,
+                puede_sumar: puede_sumar || null,
+                puede_restar: puede_restar || null,
+                nivel_matematico
             };
-            
-            if (tipoTdah) {
-                datosFormulario.Tipo_TDAH = tipoTdah;
-            }
             
             try {
                 console.log('Enviando datos para crear perfil:', datosFormulario);

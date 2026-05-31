@@ -26,7 +26,7 @@
                         <label for="n_nombre">Nombre</label>
                         <input type="text" name="n_nombre" placeholder="Nombres" required>
 
-                        <label for="edad">¿El niño tiene diagnóstico de TDAH?</label>
+                        <label for="tiene_tdah">¿El niño tiene diagnóstico de TDAH?</label>
                         <div class="custom-select-wrapper">
                             <div class="custom-select" data-value="" id="tdah-select">
                                 <div class="custom-select-display">Selecciona una opción</div>
@@ -37,7 +37,7 @@
                                     <div class="custom-option" data-value="desconocido">Desconocido</div>
                                 </div>
                             </div>
-                            <input type="hidden" name="edad" required>
+                            <input type="hidden" name="tiene_tdah" required>
                         </div>
 
                         <div id="tipo-tdah-container" style="display: none;">
@@ -53,12 +53,110 @@
                                         <div class="custom-option" data-value="desconocido">Desconocido</div>
                                     </div>
                                 </div>
-                                <input type="hidden" name="Tipo_TDAH">
+                                <input type="hidden" name="tipo_tdah">
                             </div>
                         </div>
 
+                        <label for="concentracion">¿Tiene dificultad para concentrarse durante mucho tiempo?</label>
+                        <div class="custom-select-wrapper">
+                            <div class="custom-select" data-value="" id="concentracion-select">
+                                <div class="custom-select-display">Selecciona una opción</div>
+                                <div class="custom-select-options">
+                                    <div class="custom-option" data-value="">Selecciona una opción</div>
+                                    <div class="custom-option" data-value="nunca">Nunca</div>
+                                    <div class="custom-option" data-value="a_veces">A veces</div>
+                                    <div class="custom-option" data-value="frecuentemente">Frecuentemente</div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="dificultad_concentracion">
+                        </div>
+
+                        <label for="sabe_leer">¿Sabe leer?</label>
+                        <div class="custom-select-wrapper">
+                            <div class="custom-select" data-value="" id="sabe-leer-select">
+                                <div class="custom-select-display">Selecciona una opción</div>
+                                <div class="custom-select-options">
+                                    <div class="custom-option" data-value="">Selecciona una opción</div>
+                                    <div class="custom-option" data-value="si">Sí</div>
+                                    <div class="custom-option" data-value="no">No</div>
+                                    <div class="custom-option" data-value="regular">Regular</div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="sabe_leer">
+                        </div>
+
+                        <label for="sabe_escribir">¿Sabe escribir?</label>
+                        <div class="custom-select-wrapper">
+                            <div class="custom-select" data-value="" id="sabe-escribir-select">
+                                <div class="custom-select-display">Selecciona una opción</div>
+                                <div class="custom-select-options">
+                                    <div class="custom-option" data-value="">Selecciona una opción</div>
+                                    <div class="custom-option" data-value="si">Sí</div>
+                                    <div class="custom-option" data-value="no">No</div>
+                                    <div class="custom-option" data-value="regular">Regular</div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="sabe_escribir">
+                        </div>
+
+                        <label for="reconoce_numeros">¿Reconoce números?</label>
+                        <div class="custom-select-wrapper">
+                            <div class="custom-select" data-value="" id="reconoce-numeros-select">
+                                <div class="custom-select-display">Selecciona una opción</div>
+                                <div class="custom-select-options">
+                                    <div class="custom-option" data-value="">Selecciona una opción</div>
+                                    <div class="custom-option" data-value="si">Sí</div>
+                                    <div class="custom-option" data-value="no">No</div>
+                                    <div class="custom-option" data-value="parcial">No todos</div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="reconoce_numeros">
+                        </div>
+
+                        <div id="operaciones-matematicas-container" style="display: none;">
+                            <label for="puede_realizar_sumas">¿Puede realizar sumas?</label>
+                            <div class="custom-select-wrapper">
+                                <div class="custom-select" data-value="" id="sumas-select">
+                                    <div class="custom-select-display">Selecciona una opción</div>
+                                    <div class="custom-select-options">
+                                        <div class="custom-option" data-value="">Selecciona una opción</div>
+                                        <div class="custom-option" data-value="si">Sí</div>
+                                        <div class="custom-option" data-value="no">No</div>
+                                        <div class="custom-option" data-value="con_ayuda">Con ayuda</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="puede_sumar">
+                            </div>
+
+                            <label for="puede_realizar_restas">¿Puede realizar restas?</label>
+                            <div class="custom-select-wrapper">
+                                <div class="custom-select" data-value="" id="restas-select">
+                                    <div class="custom-select-display">Selecciona una opción</div>
+                                    <div class="custom-select-options">
+                                        <div class="custom-option" data-value="">Selecciona una opción</div>
+                                        <div class="custom-option" data-value="si">Sí</div>
+                                        <div class="custom-option" data-value="no">No</div>
+                                        <div class="custom-option" data-value="con_ayuda">Con ayuda</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="puede_restar">
+                            </div>
+                        </div>
+
+                        <label for="nivel_matematico">Nivel matemático</label>
+                        <div class="custom-select-wrapper">
+                            <div class="custom-select" data-value="" id="nivel-matematico-select">
+                                <div class="custom-select-display">Selecciona una opción</div>
+                                <div class="custom-select-options">
+                                    <div class="custom-option" data-value="">Selecciona una opción</div>
+                                    <div class="custom-option" data-value="basico">Básico</div>
+                                    <div class="custom-option" data-value="intermedio">Intermedio</div>
+                                    <div class="custom-option" data-value="avanzado">Avanzado</div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="nivel_matematico">
+                        </div>
                     </div>
-                    
                     <button class ="load" type="submit">Crear Perfil</button><br>
                 </form>
             </div>
