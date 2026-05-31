@@ -1,6 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
     const dialogPerfil = document.getElementById('Agregar-perfiles');
     const formPerfil = document.querySelector('form[name="crearPerfil"]');
+    const tdahSelect = document.getElementById('tdah-select');
+    const tipoTdahContainer = document.getElementById('tipo-tdah-container');
+    const tipoTdahSelect = tipoTdahContainer?.querySelector('select[name="Tipo_TDAH"]');
+    
+    // Mostrar/ocultar campo Tipo_TDAH según selección de TDAH
+    if (tdahSelect && tipoTdahContainer) {
+        tdahSelect.addEventListener('change', (e) => {
+            if (e.target.value === 'si') {
+                tipoTdahContainer.style.display = 'block';
+                if (tipoTdahSelect) tipoTdahSelect.required = true;
+            } else {
+                tipoTdahContainer.style.display = 'none';
+                if (tipoTdahSelect) tipoTdahSelect.required = false;
+            }
+        });
+    }
     
     if (formPerfil) {
         formPerfil.addEventListener('submit', async (e) => {
