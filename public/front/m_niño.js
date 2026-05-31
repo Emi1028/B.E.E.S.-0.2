@@ -1,19 +1,74 @@
+// Funcionalidad para custom selects
+function setupCustomSelect(selectElement) {
+    const display = selectElement.querySelector('.custom-select-display');
+    const options = selectElement.querySelectorAll('.custom-option');
+    const hiddenInput = selectElement.parentElement.querySelector('input[type="hidden"]');
+    
+    display.addEventListener('click', () => {
+        selectElement.classList.toggle('active');
+        // Cerrar otros selects
+        document.querySelectorAll('.custom-select.active').forEach(el => {
+            if (el !== selectElement) el.classList.remove('active');
+        });
+    });
+    
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            const value = option.getAttribute('data-value');
+            const text = option.textContent;
+            
+            // Actualizar display
+            display.textContent = text;
+            
+            // Actualizar valor en input hidden
+            if (hiddenInput) {
+                hiddenInput.value = value;
+            }
+            
+            // Marcar como seleccionado
+            options.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+            
+            // Cerrar dropdown
+            selectElement.classList.remove('active');
+            
+            // Disparar evento personalizado
+            const event = new Event('change', { bubbles: true });
+            if (hiddenInput) hiddenInput.dispatchEvent(event);
+        });
+    });
+}
+
+// Cerrar dropdowns al hacer click fuera
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.custom-select-wrapper')) {
+        document.querySelectorAll('.custom-select.active').forEach(el => {
+            el.classList.remove('active');
+        });
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const dialogPerfil = document.getElementById('Agregar-perfiles');
     const formPerfil = document.querySelector('form[name="crearPerfil"]');
     const tdahSelect = document.getElementById('tdah-select');
+    const tipoTdahSelect = document.getElementById('tipo-tdah-select');
     const tipoTdahContainer = document.getElementById('tipo-tdah-container');
-    const tipoTdahSelect = tipoTdahContainer?.querySelector('select[name="Tipo_TDAH"]');
+    
+    // Configurar custom selects
+    setupCustomSelect(tdahSelect);
+    setupCustomSelect(tipoTdahSelect);
     
     // Mostrar/ocultar campo Tipo_TDAH según selección de TDAH
-    if (tdahSelect && tipoTdahContainer) {
-        tdahSelect.addEventListener('change', (e) => {
+    const tdahHiddenInput = tdahSelect.parentElement.querySelector('input[name="edad"]');
+    if (tdahHiddenInput) {
+        tdahHiddenInput.addEventListener('change', (e) => {
             if (e.target.value === 'si') {
                 tipoTdahContainer.style.display = 'block';
-                if (tipoTdahSelect) tipoTdahSelect.required = true;
             } else {
                 tipoTdahContainer.style.display = 'none';
-                if (tipoTdahSelect) tipoTdahSelect.required = false;
+                const tipoTdahHiddenInput = tipoTdahSelect.parentElement.querySelector('input[name="Tipo_TDAH"]');
+                if (tipoTdahHiddenInput) tipoTdahHiddenInput.value = '';
             }
         });
     }
@@ -23,14 +78,29 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             
             const n_nombre = formPerfil.querySelector('input[name="n_nombre"]').value;
+            const edad = formPerfil.querySelector('input[name="edad"]').value;
+            const tipoTdah = formPerfil.querySelector('input[name="Tipo_TDAH"]')?.value || '';
             
             if (!n_nombre.trim()) {
                 return alert("El nombre no puede estar vacío");
             }
             
+            if (!edad) {
+                return alert("Por favor selecciona si el niño tiene diagnóstico de TDAH");
+            }
+            
+            if (edad === 'si' && !tipoTdah) {
+                return alert("Por favor selecciona el tipo de TDAH");
+            }
+            
             const datosFormulario = {
-                n_nombre
+                n_nombre,
+                edad
             };
+            
+            if (tipoTdah) {
+                datosFormulario.Tipo_TDAH = tipoTdah;
+            }
             
             try {
                 console.log('Enviando datos para crear perfil:', datosFormulario);

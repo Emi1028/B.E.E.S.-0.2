@@ -301,3 +301,127 @@ dialog select:focus {
 dialog select:hover {
     border-color: var(--one-esmeralda);
 }
+
+/* Estilos para el dropdown personalizado */
+.custom-select-wrapper {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.custom-select-display {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid transparent;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    background: var(--white);
+    color: var(--gray-dark);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 40px;
+    user-select: none;
+}
+
+.custom-select-display::after {
+    content: '▼';
+    position: absolute;
+    right: 14px;
+    font-size: 0.7rem;
+    color: var(--gray-dark);
+    pointer-events: none;
+    transition: transform 0.3s ease;
+}
+
+.custom-select.active .custom-select-display {
+    border-color: var(--one-esmeralda);
+    transform: translateY(-2px);
+}
+
+.custom-select.active .custom-select-display::after {
+    transform: rotate(180deg);
+}
+
+.custom-select.active .custom-select-display:hover {
+    border-color: var(--one-esmeralda);
+}
+
+.custom-select-display:hover {
+    border-color: var(--one-esmeralda);
+}
+
+.custom-select-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border: 2px solid var(--one-esmeralda);
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    z-index: 1000;
+    margin-top: 5px;
+}
+
+.custom-select.active .custom-select-options {
+    max-height: 250px;
+    opacity: 1;
+    overflow-y: auto;
+}
+
+.custom-option {
+    padding: 12px 14px;
+    color: var(--gray-dark);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.custom-option:first-child {
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.custom-option:hover {
+    background: rgba(0,180,255,0.1);
+    color: var(--primary);
+    padding-left: 20px;
+}
+
+.custom-option.selected {
+    background: var(--one-esmeralda);
+    color: var(--white);
+    font-weight: 600;
+}
+
+/* Estilos para el scrollbar del dropdown */
+.custom-select-options::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-select-options::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.05);
+    border-radius: 10px;
+}
+
+.custom-select-options::-webkit-scrollbar-thumb {
+    background: var(--one-esmeralda);
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.custom-select-options::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}

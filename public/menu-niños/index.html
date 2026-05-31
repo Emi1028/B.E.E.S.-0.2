@@ -27,22 +27,34 @@
                         <input type="text" name="n_nombre" placeholder="Nombres" required>
 
                         <label for="edad">¿El niño tiene diagnóstico de TDAH?</label>
-                        <select id="tdah-select" name="edad" required>
-                            <option value="">Selecciona una opción</option>
-                            <option value="si">Sí</option>
-                            <option value="no">No</option>
-                            <option value="desconocido">Desconocido</option>
-                        </select>
+                        <div class="custom-select-wrapper">
+                            <div class="custom-select" data-value="" id="tdah-select">
+                                <div class="custom-select-display">Selecciona una opción</div>
+                                <div class="custom-select-options">
+                                    <div class="custom-option" data-value="">Selecciona una opción</div>
+                                    <div class="custom-option" data-value="si">Sí</div>
+                                    <div class="custom-option" data-value="no">No</div>
+                                    <div class="custom-option" data-value="desconocido">Desconocido</div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="edad" required>
+                        </div>
 
                         <div id="tipo-tdah-container" style="display: none;">
                             <label for="Tipo_TDAH">¿Cuál es el Tipo de TDAH que tiene?</label>
-                            <select name="Tipo_TDAH">
-                                <option value="">Selecciona una opción</option>
-                                <option value="inatento">Inatento</option>
-                                <option value="hiperactivo">Hiperactivo/impulsivo</option>
-                                <option value="Combinado">Combinado</option>
-                                <option value="desconocido">Desconocido</option>
-                            </select>
+                            <div class="custom-select-wrapper">
+                                <div class="custom-select" data-value="" id="tipo-tdah-select">
+                                    <div class="custom-select-display">Selecciona una opción</div>
+                                    <div class="custom-select-options">
+                                        <div class="custom-option" data-value="">Selecciona una opción</div>
+                                        <div class="custom-option" data-value="inatento">Inatento</div>
+                                        <div class="custom-option" data-value="hiperactivo">Hiperactivo/impulsivo</div>
+                                        <div class="custom-option" data-value="Combinado">Combinado</div>
+                                        <div class="custom-option" data-value="desconocido">Desconocido</div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="Tipo_TDAH">
+                            </div>
                         </div>
 
                     </div>
