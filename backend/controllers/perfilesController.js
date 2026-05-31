@@ -2,13 +2,13 @@ const pool = require('../db/connection');
 
 // Crear un nuevo perfil de niño
 exports.crearPerfil = async (req, res) => {
-    const { n_nombre, q1, q2, q3, q4 } = req.body;
+    const { n_nombre } = req.body;
     const userId = req.session.userId;
 
     try {
         const [result] = await pool.query(
-            'INSERT INTO prueba_niños (n_nombre, id_papa, q1, q2, q3, q4) VALUES (?, ?, ?, ?, ?, ?)',
-            [n_nombre, userId, q1 || 0, q2 || 0, q3 || 0, q4 || 0]
+            'INSERT INTO prueba_niños (n_nombre, id_papa) VALUES (?, ?)',
+            [n_nombre, userId]
         );
 
         return res.json({
