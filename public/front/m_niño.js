@@ -120,10 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return alert("Por favor selecciona si el niño tiene diagnóstico de TDAH");
             }
             
-            if (tiene_tdah === 'si' && !tipo_tdah) {
-                return alert("Por favor selecciona el tipo de TDAH");
-            }
-            
             if (!dificultad_concentracion) {
                 return alert("Por favor responde la pregunta de concentración");
             }
@@ -138,19 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (!reconoce_numeros) {
                 return alert("Por favor responde si reconoce números");
-            }
-            
-            if (reconoce_numeros === 'si') {
-                if (!puede_sumar) {
-                    return alert("Por favor responde si puede realizar sumas");
-                }
-                if (!puede_restar) {
-                    return alert("Por favor responde si puede realizar restas");
-                }
-            }
-            
-            if (!nivel_matematico) {
-                return alert("Por favor selecciona el nivel matemático");
             }
             
             const datosFormulario = {
