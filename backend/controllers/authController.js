@@ -99,7 +99,7 @@ exports.login = async (req, res) => {
 
             return res.status(401).json({ 
                 success: false, 
-                message: `Credenciales incorrectas. Intentos restantes: ${5 - intentosFallidos}`
+                message: `Credenciales incorrectas`
             });
         }
 
