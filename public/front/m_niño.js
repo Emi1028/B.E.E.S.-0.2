@@ -66,6 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCustomSelect(reconoceNumerosSelect);
     setupCustomSelect(document.getElementById('sumas-select'));
     setupCustomSelect(document.getElementById('restas-select'));
+    setupCustomSelect(document.getElementById('multiplicacion-select'));
+    setupCustomSelect(document.getElementById('division-select'));
     setupCustomSelect(document.getElementById('nivel-matematico-select'));
     
     // Mostrar/ocultar campo tipo_tdah según selección de TDAH
@@ -93,6 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Limpiar valores de sumas y restas
                 formPerfil.querySelector('input[name="puede_sumar"]').value = '';
                 formPerfil.querySelector('input[name="puede_restar"]').value = '';
+                formPerfil.querySelector('input[name="puede_multiplicar"]').value = '';
+                formPerfil.querySelector('input[name="puede_dividir"]').value = '';
             }
         });
     }
@@ -110,7 +114,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const reconoce_numeros = formPerfil.querySelector('input[name="reconoce_numeros"]').value;
             const puede_sumar = formPerfil.querySelector('input[name="puede_sumar"]').value;
             const puede_restar = formPerfil.querySelector('input[name="puede_restar"]').value;
-            const nivel_matematico = formPerfil.querySelector('input[name="nivel_matematico"]').value;
+            const puede_multiplicar = formPerfil.querySelector('input[name="puede_multiplicar"]').value;
+            const puede_dividir = formPerfil.querySelector('input[name="puede_dividir"]').value;
             
             if (!n_nombre.trim()) {
                 return alert("El nombre no puede estar vacío");
@@ -146,7 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 reconoce_numeros,
                 puede_sumar: puede_sumar || null,
                 puede_restar: puede_restar || null,
-                nivel_matematico
+                puede_dividir: puede_dividir || null,
+                puede_multiplicar: puede_multiplicar || null
             };
             
             try {
