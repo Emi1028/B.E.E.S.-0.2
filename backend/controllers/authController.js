@@ -63,10 +63,50 @@ exports.login = async (req, res) => {
 
         const usuario = rows[0];
 
+        if (usuario.bloqueado_hasta && new Date(usuario.bloqueado_hasta) > new Date()) {
+            const minutosRestantes = Math.ceil((new Date(usuario.bloqueado_hasta) - new Date()) / 60000);
+            return res.status(403).json({ 
+                success: false, 
+                message: `Cuenta bloqueada. Intenta en ${minutosRestantes} minutos.`,
+                bloqueado: true
+            });
+        }
+
         const valid = await bcrypt.compare(contraseña, usuario.password);
         if (!valid) {
-            return res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
+            const intentosFallidos = (usuario.intentos_fallidos || 0) + 1;
+
+            if (intentosFallidos >= 5) {
+                const bloqueadoHasta = new Date(Date.now() + 15 * 60 * 1000);
+                
+                await pool.query(
+                    'UPDATE c_papa SET intentos_fallidos = ?, bloqueado_hasta = ? WHERE id_papa = ?',
+                    [intentosFallidos, bloqueadoHasta, usuario.id_papa]
+                );
+                
+                const minutosRestantes = Math.ceil((bloqueadoHasta - new Date()) / 60000);
+                return res.status(403).json({ 
+                    success: false, 
+                    message: `Demasiados intentos fallidos. Cuenta bloqueada por ${minutosRestantes} minutos.`,
+                    bloqueado: true
+                });
+            } else {
+                await pool.query(
+                    'UPDATE c_papa SET intentos_fallidos = ? WHERE id_papa = ?',
+                    [intentosFallidos, usuario.id_papa]
+                );
+            }
+
+            return res.status(401).json({ 
+                success: false, 
+                message: `Credenciales incorrectas. Intentos restantes: ${5 - intentosFallidos}`
+            });
         }
+
+        await pool.query(
+            'UPDATE c_papa SET intentos_fallidos = 0, bloqueado_hasta = NULL WHERE id_papa = ?',
+            [usuario.id_papa]
+        );
 
         req.session.userId = usuario.id_papa;
         req.session.usuario = {

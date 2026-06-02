@@ -22,11 +22,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Manejo de inicio de sesión
     const formInicioSesion = document.querySelector('form[name="inicio-sesion"]');
     if (formInicioSesion) {
+        // Verificar bloqueo al abrir modal
+        dialogInicioSesion.addEventListener('show', () => {
+            verificarBloqueoLogin(formInicioSesion);
+        });
+        
         formInicioSesion.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const u_nombre = formInicioSesion.querySelector('input[name="u_nombre"]').value;
             const contraseña = formInicioSesion.querySelector('#contraseña').value;
+            
+            // Verificar bloqueo local antes de enviar
+            const bloqueo = verificarBloqueoLogin(formInicioSesion);
+            if (bloqueo.bloqueado) {
+                alert(`Demasiados intentos fallidos. Intenta de nuevo en ${bloqueo.minutosRestantes} minutos.`);
+                return;
+            }
             
             try {
                 const response = await fetch('/api/login', {
@@ -40,16 +52,104 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (data.success) {
                     alert('Inicio de sesión exitoso');
+                    // Limpiar intentos fallidos al login exitoso
+                    limpiarIntentosLogin(u_nombre);
                     dialogInicioSesion.close();
                     location.reload();
                 } else {
-                    alert(data.message || 'Error al iniciar sesión');
+                    // Registrar intento fallido en localStorage
+                    registrarIntentoFallido(u_nombre);
+                    const intentosRestantes = getIntentosRestantes(u_nombre);
+                    if (intentosRestantes > 0) {
+                        alert(`${data.message || 'Error al iniciar sesión'}. Intentos restantes: ${intentosRestantes}`);
+                    } else {
+                        alert('Demasiados intentos fallidos. Intenta de nuevo en 15 minutos.');
+                    }
                 }
             } catch (error) {
                 console.error('Error:', error);
+                registrarIntentoFallido(u_nombre);
                 alert('Error de conexión');
             }
         });
+    }
+    
+    function registrarIntentoFallido(u_nombre) {
+        const intentos = JSON.parse(localStorage.getItem('loginIntentos')) || {};
+        const ahora = Date.now();
+        
+        if (!intentos[u_nombre]) {
+            intentos[u_nombre] = {
+                count: 1,
+                primerIntento: ahora,
+                ultimoIntento: ahora
+            };
+        } else {
+            const tiempoTranscurrido = ahora - intentos[u_nombre].primerIntento;
+            if (tiempoTranscurrido > 15 * 60 * 1000) {
+                intentos[u_nombre] = {
+                    count: 1,
+                    primerIntento: ahora,
+                    ultimoIntento: ahora
+                };
+            } else {
+                intentos[u_nombre].count++;
+                intentos[u_nombre].ultimoIntento = ahora;
+            }
+        }
+        
+        localStorage.setItem('loginIntentos', JSON.stringify(intentos));
+    }
+
+    function getIntentosRestantes(u_nombre) {
+        const intentos = JSON.parse(localStorage.getItem('loginIntentos')) || {};
+        if (!intentos[u_nombre]) return 5;
+        
+        const tiempoTranscurrido = Date.now() - intentos[u_nombre].primerIntento;
+        if (tiempoTranscurrido > 15 * 60 * 1000) return 5;
+        
+        return Math.max(0, 5 - intentos[u_nombre].count);
+    }
+
+    function verificarBloqueoLogin(formInicioSesion) {
+        const u_nombre = formInicioSesion.querySelector('input[name="u_nombre"]').value;
+        const intentos = JSON.parse(localStorage.getItem('loginIntentos')) || {};
+        
+        if (!intentos[u_nombre]) {
+            habilitarFormularioLogin(formInicioSesion, true);
+            return { bloqueado: false };
+        }
+
+        const tiempoTranscurrido = Date.now() - intentos[u_nombre].primerIntento;
+        const bloqueado = intentos[u_nombre].count >= 5 && tiempoTranscurrido <= 15 * 60 * 1000;
+        
+        if (bloqueado) {
+            const minutosRestantes = Math.ceil((15 * 60 * 1000 - tiempoTranscurrido) / 60 / 1000);
+            habilitarFormularioLogin(formInicioSesion, false);
+            return { bloqueado: true, minutosRestantes };
+        }
+
+        if (tiempoTranscurrido > 15 * 60 * 1000) {
+            limpiarIntentosLogin(u_nombre);
+            habilitarFormularioLogin(formInicioSesion, true);
+            return { bloqueado: false };
+        }
+        
+        habilitarFormularioLogin(formInicioSesion, true);
+        return { bloqueado: false };
+    }
+
+    function habilitarFormularioLogin(formInicioSesion, habilitado) {
+        const inputs = formInicioSesion.querySelectorAll('input, button');
+        inputs.forEach(input => {
+            input.disabled = !habilitado;
+        });
+    }
+
+    function limpiarIntentosLogin(u_nombre) {
+        const intentos = JSON.parse(localStorage.getItem('loginIntentos')) || {};
+        delete intentos[u_nombre];
+        localStorage.setItem('loginIntentos', JSON.stringify(intentos));
     }
     
     // Manejo de registro
