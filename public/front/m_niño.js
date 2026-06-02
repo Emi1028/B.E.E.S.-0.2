@@ -58,17 +58,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const operacionesContainer = document.getElementById('operaciones-matematicas-container');
     
     // Configurar custom selects
-    setupCustomSelect(tdahSelect);
-    setupCustomSelect(tipoTdahSelect);
-    setupCustomSelect(document.getElementById('concentracion-select'));
-    setupCustomSelect(document.getElementById('sabe-leer-select'));
-    setupCustomSelect(document.getElementById('sabe-escribir-select'));
-    setupCustomSelect(reconoceNumerosSelect);
-    setupCustomSelect(document.getElementById('sumas-select'));
-    setupCustomSelect(document.getElementById('restas-select'));
-    setupCustomSelect(document.getElementById('multiplicacion-select'));
-    setupCustomSelect(document.getElementById('division-select'));
-    setupCustomSelect(document.getElementById('nivel-matematico-select'));
+    if (tdahSelect) setupCustomSelect(tdahSelect);
+    if (tipoTdahSelect) setupCustomSelect(tipoTdahSelect);
+    const concentracionSelect = document.getElementById('concentracion-select');
+    if (concentracionSelect) setupCustomSelect(concentracionSelect);
+    const sabeLeerSelect = document.getElementById('sabe-leer-select');
+    if (sabeLeerSelect) setupCustomSelect(sabeLeerSelect);
+    const sabeEscribirSelect = document.getElementById('sabe-escribir-select');
+    if (sabeEscribirSelect) setupCustomSelect(sabeEscribirSelect);
+    if (reconoceNumerosSelect) setupCustomSelect(reconoceNumerosSelect);
+    const sumasSelect = document.getElementById('sumas-select');
+    if (sumasSelect) setupCustomSelect(sumasSelect);
+    const restasSelect = document.getElementById('restas-select');
+    if (restasSelect) setupCustomSelect(restasSelect);
+    const multiplicacionSelect = document.getElementById('multiplicacion-select');
+    if (multiplicacionSelect) setupCustomSelect(multiplicacionSelect);
+    const divisionSelect = document.getElementById('division-select');
+    if (divisionSelect) setupCustomSelect(divisionSelect);
     
     // Mostrar/ocultar campo tipo_tdah según selección de TDAH
     const tdahHiddenInput = tdahSelect.parentElement.querySelector('input[name="tiene_tdah"]');
